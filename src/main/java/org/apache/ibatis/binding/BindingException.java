@@ -22,6 +22,7 @@ import org.apache.ibatis.exceptions.PersistenceException;
  */
 public class BindingException extends PersistenceException {
 
+
   private static final long serialVersionUID = 4300802238789381562L;
 
   public BindingException() {
