@@ -27,6 +27,7 @@ import org.apache.ibatis.session.TransactionIsolationLevel;
  *
  * @author Clinton Begin
  */
+// 事务对象创建工厂，抽象工厂模式
 public interface TransactionFactory {
 
   /**

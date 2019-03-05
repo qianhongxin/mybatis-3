@@ -20,8 +20,12 @@ package org.apache.ibatis.parsing;
  */
 public class GenericTokenParser {
 
+  // 开始的Token字符串
   private final String openToken;
+  // 结束的Token字符串
   private final String closeToken;
+
+  // 解析openToken和closeToken之间的字符对应的值
   private final TokenHandler handler;
 
   public GenericTokenParser(String openToken, String closeToken, TokenHandler handler) {
@@ -30,7 +34,15 @@ public class GenericTokenParser {
     this.handler = handler;
   }
 
-  //这里是通用的解析算法，具体的元素解析有具体组建完成，模版方法设计模式
+
+  // 这里是通用的解析算法，具体的元素解析有具体组建完成，模版方法设计模式
+  // 从text中根据openToken，closeToken字符标示，解析出openToken和closeToken之间的目标值
+
+  // 比如 "Hello captain ${first_name} ${initial} ${last_name}"，'${'是openToken，'}'是closeToken
+  // first_name，initial，last_name对应的值用tokenHandler解析出来，比如解析出来是qian，6， hongxin。
+  // 则返回值就是'Hello captain qian 6 hongxin'，返回给调用方
+
+  // 这个parse方法就是循环从text中根据开始和结束标志付中取出key，然后用tokenhandler根据key取出结果
   public String parse(String text) {
     if (text == null || text.isEmpty()) {
       return "";

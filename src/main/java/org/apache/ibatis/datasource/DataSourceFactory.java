@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 /**
  * @author Clinton Begin
  */
+// DataSource是java.sql包下的，实现这个接口可以做很多事，比如分库分表，读写分离等
 public interface DataSourceFactory {
 
   void setProperties(Properties props);

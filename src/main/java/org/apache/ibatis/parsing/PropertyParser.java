@@ -56,6 +56,12 @@ public class PropertyParser {
     return parser.parse(string);
   }
 
+  /**
+   * @Description: 变量token处理器，解析properties文件的配置
+   *
+   * @Auther: 溪风
+   * @Date: 2019/3/5 10:08
+   */
   private static class VariableTokenHandler implements TokenHandler {
     private final Properties variables;
     private final boolean enableDefaultValue;

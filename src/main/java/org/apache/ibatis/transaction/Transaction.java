@@ -24,6 +24,12 @@ import java.sql.SQLException;
  *
  * @author Clinton Begin
  */
+// 事务都是基于connection对象来的，jdbc编程时，针对Connection来做事务的开启关闭提交回滚等
+// mybatis等orm框架等，都是对datasource的封装，也是操作connection对象来操作事务
+
+// spring-mybatis中的SpringManagedTransaction也是实现的Transaction这个接口。这个类的事务的提交和回滚等
+// 也是借助connection对象，即也是用jdbc的事务管理方式。
+
 public interface Transaction {
 
   /**

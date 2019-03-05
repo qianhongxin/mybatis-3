@@ -35,13 +35,18 @@ import org.apache.ibatis.transaction.TransactionException;
  *
  * @see JdbcTransactionFactory
  */
+//使用JDBC的事务管理机制：即利用java.sql.Connection对象完成对事务的提交（commit()）、回滚（rollback()）、关闭（close()）等
 public class JdbcTransaction implements Transaction {
 
   private static final Log log = LogFactory.getLog(JdbcTransaction.class);
 
+  // 数据库连接
   protected Connection connection;
+  // 数据源
   protected DataSource dataSource;
+  // 数据库事务隔离级别
   protected TransactionIsolationLevel level;
+  // 是否自动提交事务
   protected boolean autoCommit;
 
   public JdbcTransaction(DataSource ds, TransactionIsolationLevel desiredLevel, boolean desiredAutoCommit) {
@@ -62,6 +67,7 @@ public class JdbcTransaction implements Transaction {
     return connection;
   }
 
+  // 以下commit用的jdbc的事务管理，即connection对象，所以insert，update，delete等操作都是生效的
   @Override
   public void commit() throws SQLException {
     if (connection != null && !connection.getAutoCommit()) {
@@ -72,6 +78,7 @@ public class JdbcTransaction implements Transaction {
     }
   }
 
+  // 以下rollback用的jdbc的事务管理，即connection对象，所以回滚操作都是生效的
   @Override
   public void rollback() throws SQLException {
     if (connection != null && !connection.getAutoCommit()) {

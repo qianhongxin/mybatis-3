@@ -18,6 +18,12 @@ package org.apache.ibatis.parsing;
 /**
  * @author Clinton Begin
  */
+/**
+ * @Description: 抽象出TokenHandler接口，利用多态，方便实现模版方法等设计模式
+ *
+ * @Auther: 溪风
+ * @Date: 2019/3/5 10:03
+ */
 public interface TokenHandler {
   String handleToken(String content);
 }

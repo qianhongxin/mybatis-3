@@ -51,6 +51,10 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     this.configuration = c;
   }
 
+  // 对TypeHandler接口的setParamter方法的默认实现，这里用到了模版方法设计模式
+  // 不同的子类实现setNonNullParameter方法
+  // PreparedStatement是java.sql包下的类，mybatis操作jdbc操作这个类。这个类含有等待执行的sql，这个sql是预编译的，
+  // 有参数占位符，这个setParamter方法就是给目标占位符设置真实的参数
   @Override
   public void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
     if (parameter == null) {
@@ -75,6 +79,10 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     }
   }
 
+  // 对TypeHandler接口的 getResult 方法的默认实现，这里用到了模版方法设计模式
+  // 不同的子类实现 getNullableResult(ResultSet rs, String columnName) 方法
+  // ResultSet是java.sql包下的类，mybatis操作jdbc操作这个类，封装类db返回的结果。
+  // 这里是根据目标列获取对应的值
   @Override
   public T getResult(ResultSet rs, String columnName) throws SQLException {
     try {
@@ -84,6 +92,8 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     }
   }
 
+  // 对TypeHandler接口的 getResult 方法的默认实现，这里用到了模版方法设计模式
+  // 不同的子类实现 getNullableResult(rs, columnIndex) 方法
   @Override
   public T getResult(ResultSet rs, int columnIndex) throws SQLException {
     try {
@@ -93,6 +103,8 @@ public abstract class BaseTypeHandler<T> extends TypeReference<T> implements Typ
     }
   }
 
+  // 对TypeHandler接口的 getResult 方法的默认实现，这里用到了模版方法设计模式
+  // 不同的子类实现 getNullableResult(CallableStatement cs, int columnIndex) 方法
   @Override
   public T getResult(CallableStatement cs, int columnIndex) throws SQLException {
     try {

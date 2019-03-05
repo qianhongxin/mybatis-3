@@ -29,6 +29,7 @@ import org.apache.ibatis.datasource.DataSourceFactory;
 /**
  * @author Clinton Begin
  */
+// 这个JndiDataSource是和EJB相关的，现在用的很少
 public class JndiDataSourceFactory implements DataSourceFactory {
 
   public static final String INITIAL_CONTEXT = "initial_context";

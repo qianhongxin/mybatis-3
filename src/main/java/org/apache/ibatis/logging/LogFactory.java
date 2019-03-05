@@ -21,6 +21,7 @@ import java.lang.reflect.Constructor;
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
+// mybatis的日志很齐全，集成了jdbc，slf4j，log4j等日志框架
 public final class LogFactory {
 
   /**
