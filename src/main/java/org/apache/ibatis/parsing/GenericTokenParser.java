@@ -30,11 +30,13 @@ public class GenericTokenParser {
     this.handler = handler;
   }
 
+  //这里是通用的解析算法，具体的元素解析有具体组建完成，模版方法设计模式
   public String parse(String text) {
     if (text == null || text.isEmpty()) {
       return "";
     }
     // search open token
+    // 基础的字符串匹配算法，很多算法都是基础算法，用这些算法来解决问题，考虑复杂度
     int start = text.indexOf(openToken, 0);
     if (start == -1) {
       return text;
@@ -75,6 +77,7 @@ public class GenericTokenParser {
           builder.append(src, start, src.length - start);
           offset = src.length;
         } else {
+          // 具体的解析
           builder.append(handler.handleToken(expression.toString()));
           offset = end + closeToken.length();
         }
