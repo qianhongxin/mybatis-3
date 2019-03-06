@@ -47,6 +47,8 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 /**
  * @author Clinton Begin
  */
+// 执行器基类，这里有基本的实现，他有三个子类，用了模版方法设计模式，每个子类的执行逻辑不同
+// 比如doUpdate，doFlushStatements，doQuery等方法在子类中的实现逻辑不同
 public abstract class BaseExecutor implements Executor {
 
   private static final Log log = LogFactory.getLog(BaseExecutor.class);

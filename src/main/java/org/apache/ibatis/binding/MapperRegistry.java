@@ -37,11 +37,12 @@ import java.util.Set;
  *
  * 值得读者注意的是，开发人员无须编写自定义 Mapper 接口的实现，MyBatis 会自动为其创建动态代理对象。在有些场景中，自定义 Mapper 接口可以完全代替映射配置文件，但有的映射规则和 SQL 语句的定义还是写在映射配置文件中比较方便，例如动态 SQL 语句的定义。
  *
- *
+ * spring和mybatis结合时，mapper的生成也是mybatis生成的
  *
  * @Auther: 溪风
  * @Date: 2019/3/5 00:17
  */
+// mapper代理对象工厂的注册中心
 public class MapperRegistry {
 
   private final Configuration config;
@@ -51,6 +52,16 @@ public class MapperRegistry {
     this.config = config;
   }
 
+  /**
+   * @MethodName getMapper
+   * @Description 根据mapper的class和sqlSession对象获取Mapper对象
+   *
+   * @Return
+   * @Throw
+   * @Author 溪风
+   * @Version V1.0.0
+   * @Time 2019/3/6 17:17
+   */
   @SuppressWarnings("unchecked")
   public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
     final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);

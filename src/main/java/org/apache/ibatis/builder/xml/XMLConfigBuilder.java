@@ -92,6 +92,7 @@ public class XMLConfigBuilder extends BaseBuilder {
   }
 
   public Configuration parse() {
+    // 只让mybatis-config文件解析一次，第二次解析就报错
     if (parsed) {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
@@ -100,6 +101,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     return configuration;
   }
 
+  //解析mybatis-config的xml文件
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first

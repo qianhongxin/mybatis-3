@@ -22,6 +22,22 @@ import org.apache.ibatis.transaction.TransactionFactory;
 /**
  * @author Clinton Begin
  */
+//mybatis-config.xml中的Enviroment配置对应的对象
+//<environments default="development">
+//<environment id="development">
+//<transactionManager type="JDBC">
+//<property name="" value=""/>
+//</transactionManager>
+//<dataSource type="UNPOOLED">
+//<property name="driver" value="org.hsqldb.jdbcDriver"/>
+//<property name="url" value="jdbc:hsqldb:mem:automapping"/>
+//<property name="username" value="sa"/>
+//</dataSource>
+//</environment>
+//</environments>
+
+// 每次启动就只能激活一个environment
+// spring-mybatis，事务和数据源都是被spring注入的，不用mybatis在自己配置文件中指定
 public final class Environment {
   private final String id;
   private final TransactionFactory transactionFactory;

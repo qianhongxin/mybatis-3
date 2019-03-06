@@ -30,6 +30,7 @@ import org.apache.ibatis.transaction.Transaction;
 /**
  * @author Clinton Begin
  */
+// 执行器，sqlsession的各种crud，commit操作等都是委托给executor执行。sqlsession这种操作相当于外观模式
 public interface Executor {
 
   ResultHandler NO_RESULT_HANDLER = null;

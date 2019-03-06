@@ -25,6 +25,7 @@ import org.apache.ibatis.session.SqlSession;
 /**
  * @author Lasse Voss
  */
+// MapperProxy工厂
 public class MapperProxyFactory<T> {
 
   private final Class<T> mapperInterface;
@@ -47,6 +48,8 @@ public class MapperProxyFactory<T> {
     return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[] { mapperInterface }, mapperProxy);
   }
 
+  //根据sqlSession新建Mapper的代理对象，每次都是新建，因为sqlSession用完了就销毁了，connection还给连接池
+  // jdk动态代理，aop讲解：https://blog.csdn.net/u012834750/article/details/82499648
   public T newInstance(SqlSession sqlSession) {
     final MapperProxy<T> mapperProxy = new MapperProxy<>(sqlSession, mapperInterface, methodCache);
     return newInstance(mapperProxy);

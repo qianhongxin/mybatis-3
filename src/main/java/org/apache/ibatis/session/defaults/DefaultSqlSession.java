@@ -46,6 +46,7 @@ import org.apache.ibatis.session.SqlSession;
  *
  * @author Clinton Begin
  */
+// SqlSession的默认实现
 public class DefaultSqlSession implements SqlSession {
 
   private final Configuration configuration;
@@ -287,6 +288,7 @@ public class DefaultSqlSession implements SqlSession {
     return configuration;
   }
 
+  // 根据Mapper的类型获取对应的mapper对象
   @Override
   public <T> T getMapper(Class<T> type) {
     return configuration.<T>getMapper(type, this);

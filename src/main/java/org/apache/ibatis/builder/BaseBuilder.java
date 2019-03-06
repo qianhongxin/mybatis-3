@@ -31,6 +31,8 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 /**
  * @author Clinton Begin
  */
+// 基础构造器抽象类，为子类提供通用的工具类
+// 提供了通用的方法，将公共字段放在一起，比如configuration，typeAliasRegistry，typeHandlerRegistry
 public abstract class BaseBuilder {
   protected final Configuration configuration;
   protected final TypeAliasRegistry typeAliasRegistry;

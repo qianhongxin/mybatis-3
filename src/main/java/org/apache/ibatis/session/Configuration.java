@@ -94,8 +94,10 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
 /**
  * @author Clinton Begin
  */
+// xpath解析mybatis-config.xml中的内容，将这个xml和相关的mappers文件中的内容解析出来。创建出configuration对象
 public class Configuration {
 
+  //<environments>...</environments>标签中的内容
   protected Environment environment;
 
   protected boolean safeRowBoundsEnabled;
@@ -122,6 +124,7 @@ public class Configuration {
   protected AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
   protected AutoMappingUnknownColumnBehavior autoMappingUnknownColumnBehavior = AutoMappingUnknownColumnBehavior.NONE;
 
+  //<properties>...</properties>标签中的内容
   protected Properties variables = new Properties();
   protected ReflectorFactory reflectorFactory = new DefaultReflectorFactory();
   protected ObjectFactory objectFactory = new DefaultObjectFactory();
@@ -139,16 +142,25 @@ public class Configuration {
    */
   protected Class<?> configurationFactory;
 
+  //<mappers>...</mappers>标签中的mapper文件
   protected final MapperRegistry mapperRegistry = new MapperRegistry(this);
+  //<plugins>...</plugins>标签中配置的拦截器
   protected final InterceptorChain interceptorChain = new InterceptorChain();
+  // 类型转换
   protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
+  // 类型别名
   protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+
   protected final LanguageDriverRegistry languageRegistry = new LanguageDriverRegistry();
 
   protected final Map<String, MappedStatement> mappedStatements = new StrictMap<>("Mapped Statements collection");
+  //配置的缓存
   protected final Map<String, Cache> caches = new StrictMap<>("Caches collection");
+  //定义的resultmap
   protected final Map<String, ResultMap> resultMaps = new StrictMap<>("Result Maps collection");
+  //定义的parametermap
   protected final Map<String, ParameterMap> parameterMaps = new StrictMap<>("Parameter Maps collection");
+  //定义的主键生成策略
   protected final Map<String, KeyGenerator> keyGenerators = new StrictMap<>("Key Generators collection");
 
   protected final Set<String> loadedResources = new HashSet<>();
@@ -564,6 +576,7 @@ public class Configuration {
     return newExecutor(transaction, defaultExecutorType);
   }
 
+  // 根据
   public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
     executorType = executorType == null ? defaultExecutorType : executorType;
     executorType = executorType == null ? ExecutorType.SIMPLE : executorType;

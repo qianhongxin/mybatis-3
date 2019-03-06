@@ -24,6 +24,7 @@ import org.apache.ibatis.logging.LogFactory;
 /**
  * @author Clinton Begin
  */
+//让Cache有日志功能，
 public class LoggingCache implements Cache {
 
   private final Log log;
