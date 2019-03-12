@@ -53,15 +53,22 @@ public abstract class BaseExecutor implements Executor {
 
   private static final Log log = LogFactory.getLog(BaseExecutor.class);
 
+  //事务
   protected Transaction transaction;
+  //包装的executor对象
   protected Executor wrapper;
 
+  //延迟加载队列
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
+  //本地缓存，也即一级缓存
   protected PerpetualCache localCache;
+  //本地输出类型的参数的缓存
   protected PerpetualCache localOutputParameterCache;
   protected Configuration configuration;
 
+  //记录嵌套查询的层级
   protected int queryStack;
+  //是否关闭
   private boolean closed;
 
   protected BaseExecutor(Configuration configuration, Transaction transaction) {
@@ -82,6 +89,7 @@ public abstract class BaseExecutor implements Executor {
     return transaction;
   }
 
+  //该方法
   @Override
   public void close(boolean forceRollback) {
     try {

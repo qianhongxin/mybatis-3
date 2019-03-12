@@ -51,6 +51,7 @@ import org.apache.ibatis.type.TypeHandler;
  * @author Clinton Begin
  * @author Kazuki Shimizu
  */
+//解析config.xml
 public class XMLConfigBuilder extends BaseBuilder {
 
   private boolean parsed;
@@ -105,20 +106,33 @@ public class XMLConfigBuilder extends BaseBuilder {
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first
+      // <1> 解析 <properties /> 标签
       propertiesElement(root.evalNode("properties"));
+      // <2> 解析 <settings /> 标签
       Properties settings = settingsAsProperties(root.evalNode("settings"));
+      // <3> 加载自定义 VFS 实现类
       loadCustomVfs(settings);
+      // <4> 解析 <typeAliases /> 标签
       typeAliasesElement(root.evalNode("typeAliases"));
+      // <5> 解析 <plugins /> 标签
       pluginElement(root.evalNode("plugins"));
+      // <6> 解析 <objectFactory /> 标签
       objectFactoryElement(root.evalNode("objectFactory"));
+      // <7> 解析 <objectWrapperFactory /> 标签
       objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
+      // <8> 解析 <reflectorFactory /> 标签
       reflectorFactoryElement(root.evalNode("reflectorFactory"));
+      // <9> 赋值 <settings /> 到 Configuration 属性
       settingsElement(settings);
       // read it after objectFactory and objectWrapperFactory issue #631
+      // <10> 解析 <environments /> 标签
       environmentsElement(root.evalNode("environments"));
+      // <11> 解析 <databaseIdProvider /> 标签
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+      // <12> 解析 <typeHandlers /> 标签
       typeHandlerElement(root.evalNode("typeHandlers"));
-      mapperElement(root.evalNode("mappers")); //解析mapper
+      // <13> 解析 <mappers /> 标签
+      mapperElement(root.evalNode("mappers"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
     }
@@ -130,6 +144,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
     Properties props = context.getChildrenAsProperties();
     // Check that all settings are known to the configuration class
+    // 校验每个属性，在 Configuration 中，有相应的 setting 方法，否则抛出 BuilderException 异常
     MetaClass metaConfig = MetaClass.forClass(Configuration.class, localReflectorFactory);
     for (Object key : props.keySet()) {
       if (!metaConfig.hasSetter(String.valueOf(key))) {
@@ -153,17 +168,28 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  //标签标准样式
+//<typeAliases>
+//    <typeAlias alias="BlogAuthor" type="org.apache.ibatis.domain.blog.Author"/>
+//    <typeAlias type="org.apache.ibatis.domain.blog.Blog"/>
+//    <typeAlias type="org.apache.ibatis.domain.blog.Post"/>
+//    <package name="org.apache.ibatis.domain.jpetstore"/>
+//  </typeAliases>
   private void typeAliasesElement(XNode parent) {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {
+        // 指定为包的情况下，注册包下的每个类
         if ("package".equals(child.getName())) {
           String typeAliasPackage = child.getStringAttribute("name");
           configuration.getTypeAliasRegistry().registerAliases(typeAliasPackage);
+          // 指定为类的情况下，直接注册类和别名
         } else {
           String alias = child.getStringAttribute("alias");
           String type = child.getStringAttribute("type");
           try {
+            // 获得类是否存在
             Class<?> clazz = Resources.classForName(type);
+            // 注册到 typeAliasRegistry 中
             if (alias == null) {
               typeAliasRegistry.registerAlias(clazz);
             } else {
@@ -189,6 +215,9 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+//  <objectFactory type="org.apache.ibatis.builder.ExampleObjectFactory">
+//    <property name="objectFactoryProperty" value="100"/>
+//  </objectFactory>
   private void objectFactoryElement(XNode context) throws Exception {
     if (context != null) {
       String type = context.getStringAttribute("type");
@@ -199,6 +228,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  //<objectWrapperFactory type="org.apache.ibatis.builder.CustomObjectWrapperFactory" />
   private void objectWrapperFactoryElement(XNode context) throws Exception {
     if (context != null) {
       String type = context.getStringAttribute("type");
@@ -206,7 +236,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       configuration.setObjectWrapperFactory(factory);
     }
   }
-
+  //<reflectorFactory type="org.apache.ibatis.builder.CustomReflectorFactory"/>
   private void reflectorFactoryElement(XNode context) throws Exception {
     if (context != null) {
        String type = context.getStringAttribute("type");
@@ -215,9 +245,12 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  //解析xml中的properties标签
   private void propertiesElement(XNode context) throws Exception {
     if (context != null) {
+      // 获取默认子节点<property></property>中的内容
       Properties defaults = context.getChildrenAsProperties();
+      // 获取<properties>标签的url和resource属性
       String resource = context.getStringAttribute("resource");
       String url = context.getStringAttribute("url");
       if (resource != null && url != null) {
@@ -289,7 +322,9 @@ public class XMLConfigBuilder extends BaseBuilder {
       }
     }
   }
-
+  //<databaseIdProvider type="DB_VENDOR">
+  //    <property name="Apache Derby" value="derby"/>
+  //  </databaseIdProvider>
   private void databaseIdProviderElement(XNode context) throws Exception {
     DatabaseIdProvider databaseIdProvider = null;
     if (context != null) {
@@ -331,6 +366,12 @@ public class XMLConfigBuilder extends BaseBuilder {
     throw new BuilderException("Environment declaration requires a DataSourceFactory.");
   }
 
+  //<typeHandlers>
+  //    <typeHandler javaType="String" handler="org.apache.ibatis.builder.CustomStringTypeHandler"/>
+  //    <typeHandler javaType="String" jdbcType="VARCHAR" handler="org.apache.ibatis.builder.CustomStringTypeHandler"/>
+  //    <typeHandler handler="org.apache.ibatis.builder.CustomLongTypeHandler"/>
+  //    <package name="org.apache.ibatis.builder.typehandler"/>
+  //  </typeHandlers>
   private void typeHandlerElement(XNode parent) throws Exception {
     if (parent != null) {
       for (XNode child : parent.getChildren()) {
@@ -358,13 +399,23 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
   }
 
+  //<mappers>
+  //    <mapper resource="org/apache/ibatis/builder/BlogMapper.xml"/>
+  //    <mapper url="file:./src/test/java/org/apache/ibatis/builder/NestedBlogMapper.xml"/>
+  //    <mapper class="org.apache.ibatis.builder.CachedAuthorMapper"/>
+  //    <package name="org.apache.ibatis.builder.mapper"/>
+  //  </mappers>
   private void mapperElement(XNode parent) throws Exception {
     if (parent != null) {
+      // 遍历<mappers>
+      //        <mapper resource="org/apache/ibatis/autoconstructor/AutoConstructorMapper.xml"/>
+      //    </mappers>
       for (XNode child : parent.getChildren()) {
         if ("package".equals(child.getName())) {
           String mapperPackage = child.getStringAttribute("name");
           configuration.addMappers(mapperPackage);
         } else {
+          //遍历mapper标签的url，class，resource属性，三个只要配置1个即可
           String resource = child.getStringAttribute("resource");
           String url = child.getStringAttribute("url");
           String mapperClass = child.getStringAttribute("class");

@@ -32,6 +32,8 @@ import org.apache.ibatis.session.RowBounds;
 /**
  * @author Clinton Begin
  */
+//根据不同的类型，创建对应的 StatementHandler 实现类。
+//经典的装饰器模式。实际上，有点多余。。。还不如改成工厂模式。
 public class RoutingStatementHandler implements StatementHandler {
 
   private final StatementHandler delegate;

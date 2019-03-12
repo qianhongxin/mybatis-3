@@ -30,7 +30,9 @@ import org.apache.ibatis.executor.BatchResult;
  * @author Clinton Begin
  */
 // mybatis操作的主要入口，curd，事务操作，mapper获取等
-// 将Executor，transaction等封装起来，用到了设计模式中最少知道原则，减少对象之间的依赖，高内聚低耦合
+// 将Executor，transaction等封装起来，用到了设计模式中最少知道原则，有外观模式意思，减少对象之间的依赖，高内聚低耦合
+
+  //我们已经详细解析了 MyBatis 执行器 Executor 相关的内容，但是显然，Executor 是不适合直接暴露给用户使用的，而是需要通过 SqlSession 。
 public interface SqlSession extends Closeable {
 
   /**

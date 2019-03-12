@@ -1,5 +1,13 @@
 数据源中的push和pop方法逻辑，流程图
 
+xpath解析原理
+
 parsing模块，GenericTokenParser的解析逻辑
 
 binding中的mapper生成
+
+
+spring-mybatis会有自己的sqlsession，transaction等对象
+
+
+druid是怎么实现sql拦截处理的，影响mybatis的statment执行吗？

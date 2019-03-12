@@ -50,10 +50,12 @@ import org.apache.ibatis.type.TypeHandler;
 /**
  * @author Clinton Begin
  */
+//解析mapper.xml
 public class XMLMapperBuilder extends BaseBuilder {
 
   private final XPathParser parser;
   private final MapperBuilderAssistant builderAssistant;
+  // insert，update，select，delete的标签
   private final Map<String, XNode> sqlFragments;
   private final String resource;
 
@@ -90,13 +92,20 @@ public class XMLMapperBuilder extends BaseBuilder {
   // 解析xml的mapper文件
   public void parse() {
     if (!configuration.isResourceLoaded(resource)) {
+      //解析 `<mapper />` 节点
       configurationElement(parser.evalNode("/mapper"));
+      //标记mapper已经加载过
       configuration.addLoadedResource(resource);
+      //将mapper类对象放在mapperRegistry中
       bindMapperForNamespace();
     }
 
+    //解析<ResultMap>...</ResultMap>
+    // <5> 解析待定的 <resultMap /> 节点
     parsePendingResultMaps();
+    // <6> 解析待定的 <cache-ref /> 节点
     parsePendingCacheRefs();
+    // <7> 解析待定的 SQL 语句的节点
     parsePendingStatements();
   }
 
@@ -104,6 +113,7 @@ public class XMLMapperBuilder extends BaseBuilder {
     return sqlFragments.get(refid);
   }
 
+  //<mapper namespace="org.apache.ibatis.domain.blog.mappers.BlogMapper">...</mapper>
   private void configurationElement(XNode context) {
     try {
       String namespace = context.getStringAttribute("namespace");
@@ -396,7 +406,7 @@ public class XMLMapperBuilder extends BaseBuilder {
     }
     return null;
   }
-
+  //<mapper namespace="org.apache.ibatis.domain.blog.mappers.BlogMapper">...</mapper>
   private void bindMapperForNamespace() {
     String namespace = builderAssistant.getCurrentNamespace();
     if (namespace != null) {
@@ -407,6 +417,7 @@ public class XMLMapperBuilder extends BaseBuilder {
         //ignore, bound type is not required
       }
       if (boundType != null) {
+        //没加载过就加载
         if (!configuration.hasMapper(boundType)) {
           // Spring may not know the real resource name so we set a flag
           // to prevent loading again this resource from the mapper interface
