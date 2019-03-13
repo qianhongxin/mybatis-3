@@ -427,6 +427,7 @@ public class XMLConfigBuilder extends BaseBuilder {
           } else if (resource == null && url != null && mapperClass == null) {
             ErrorContext.instance().resource(url);
             InputStream inputStream = Resources.getUrlAsStream(url);
+            // 创建XMLMapperBuilder对象解析mapper文件，一个mapper文件对应一个XMLMapperBuilder对象。每个XMLMapperBuilder对象中都有一个助理对象builderAssistant。
             XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, url, configuration.getSqlFragments());
             mapperParser.parse();
           } else if (resource == null && url == null && mapperClass != null) {

@@ -63,15 +63,16 @@ public class XMLStatementBuilder extends BaseBuilder {
       return;
     }
 
+    //获取select|insert|delete|update标签上的各个属性对应的值
     Integer fetchSize = context.getIntAttribute("fetchSize");
     Integer timeout = context.getIntAttribute("timeout");
-    //解析parameterMap
     String parameterMap = context.getStringAttribute("parameterMap");
     String parameterType = context.getStringAttribute("parameterType");
     Class<?> parameterTypeClass = resolveClass(parameterType);
     String resultMap = context.getStringAttribute("resultMap");
     String resultType = context.getStringAttribute("resultType");
     String lang = context.getStringAttribute("lang");
+
     LanguageDriver langDriver = getLanguageDriver(lang);
 
     Class<?> resultTypeClass = resolveClass(resultType);
@@ -109,6 +110,7 @@ public class XMLStatementBuilder extends BaseBuilder {
           ? Jdbc3KeyGenerator.INSTANCE : NoKeyGenerator.INSTANCE;
     }
 
+    // select|insert|delete|update每个节点解析后得到对应的MappedStatement对象
     builderAssistant.addMappedStatement(id, sqlSource, statementType, sqlCommandType,
         fetchSize, timeout, parameterMap, parameterTypeClass, resultMap, resultTypeClass,
         resultSetTypeEnum, flushCache, useCache, resultOrdered, 

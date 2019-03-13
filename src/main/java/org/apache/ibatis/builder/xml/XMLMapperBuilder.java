@@ -57,6 +57,7 @@ public class XMLMapperBuilder extends BaseBuilder {
   private final MapperBuilderAssistant builderAssistant;
   // insert，update，select，delete的标签
   private final Map<String, XNode> sqlFragments;
+  // mapper文件唯一标识，mapper标签的url，class，resource属性值
   private final String resource;
 
   @Deprecated
@@ -83,6 +84,7 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   private XMLMapperBuilder(XPathParser parser, Configuration configuration, String resource, Map<String, XNode> sqlFragments) {
     super(configuration);
+    // 一个创建
     this.builderAssistant = new MapperBuilderAssistant(configuration, resource);
     this.parser = parser;
     this.sqlFragments = sqlFragments;
@@ -92,7 +94,7 @@ public class XMLMapperBuilder extends BaseBuilder {
   // 解析xml的mapper文件
   public void parse() {
     if (!configuration.isResourceLoaded(resource)) {
-      //解析 `<mapper />` 节点
+      //解析 `<mapper />` 节点及其子节点
       configurationElement(parser.evalNode("/mapper"));
       //标记mapper已经加载过
       configuration.addLoadedResource(resource);
@@ -121,11 +123,30 @@ public class XMLMapperBuilder extends BaseBuilder {
         throw new BuilderException("Mapper's namespace cannot be empty");
       }
       builderAssistant.setCurrentNamespace(namespace);
+      // <cache-ref  namespace=""></cache-ref>
       cacheRefElement(context.evalNode("cache-ref"));
+      // <cache readOnly="true"/>
       cacheElement(context.evalNode("cache"));
+      // 解析所有的parameterMap节点
+      // <parameterMap id="selectAuthor" type="org.apache.ibatis.domain.blog.Author">
+      //		<parameter property="id" />
+      //	</parameterMap>
       parameterMapElement(context.evalNodes("/mapper/parameterMap"));
+      //<resultMap id="earlyNestedDiscriminatorPost" type="org.apache.ibatis.domain.blog.Post">
+      //    <id property="id" column="post_id"/>
+      //    <result property="subject" column="post_subject"/>
+      //    <discriminator javaType="int" column="draft">
+      //      <case value="1">
+      //        <association property="author" resultMap="joinedAuthor"/>
+      //        <collection property="comments" resultMap="joinedComment"/>
+      //        <collection property="tags" resultMap="joinedTag"/>
+      //      </case>
+      //    </discriminator>
+      //  </resultMap>
       resultMapElements(context.evalNodes("/mapper/resultMap"));
+      // 解析所有的<sql>...</sql>节点
       sqlElement(context.evalNodes("/mapper/sql"));
+      // 解析<insert>...</insert> <update>...</update> <select>...</select> <delete>...</delete>等节点
       buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
     } catch (Exception e) {
       throw new BuilderException("Error parsing Mapper XML. The XML location is '" + resource + "'. Cause: " + e, e);
@@ -141,6 +162,7 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   private void buildStatementFromContext(List<XNode> list, String requiredDatabaseId) {
     for (XNode context : list) {
+      //select|insert|update|delete中的每个标签都对应一个XMLStatementBuilder对象负责解析。builderAssistant对象是当前节点所属的mapper文件对象XMLMapperBuilder的字段
       final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);
       try {
         statementParser.parseStatementNode();

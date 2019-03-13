@@ -31,15 +31,18 @@ import org.apache.ibatis.session.Configuration;
 /**
  * @author Clinton Begin
  */
+// select|insert|delete|update每个节点解析后得到对应的MappedStatement对象
 public final class MappedStatement {
 
   private String resource;
   private Configuration configuration;
+  //id就是select|insert|delete|update 节点中id属性的值。也对应mapper接口中的方法名。一个mapper中是唯一的
   private String id;
   private Integer fetchSize;
   private Integer timeout;
   private StatementType statementType;
   private ResultSetType resultSetType;
+  //
   private SqlSource sqlSource;
   private Cache cache;
   private ParameterMap parameterMap;

@@ -271,7 +271,7 @@ public class MapperBuilderAssistant extends BaseBuilder {
     if (unresolvedCacheRef) {
       throw new IncompleteElementException("Cache-ref not yet resolved");
     }
-
+    // 这里的id是mapper文件的namespace属性和对应标签的id属性值的拼接而成。所以两个mapper文件中可以有重复的id值
     id = applyCurrentNamespace(id, false);
     boolean isSelect = sqlCommandType == SqlCommandType.SELECT;
 
