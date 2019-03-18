@@ -43,3 +43,8 @@ public void executeSql(String sql)throws Exception
             }
         }
     }
+
+https://blog.csdn.net/yerenyuan_pku/article/details/52387676
+
+jdbc编程的事务管理，就是用connection的commit方法来做的。mybatis，hibernate等orm框架用session
+封装的executor对象，executor封装了transaction对象，transaction封装了connection对象来做的

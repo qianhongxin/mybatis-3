@@ -49,7 +49,9 @@ import org.apache.ibatis.session.SqlSession;
 // SqlSession的默认实现
 public class DefaultSqlSession implements SqlSession {
 
+  // configuration 对象中包含了 mybatis-config.xml，mapper.xml 解析出来的对象，都缓存在configuration对象中
   private final Configuration configuration;
+
   private final Executor executor;
 
   private final boolean autoCommit;
@@ -147,6 +149,7 @@ public class DefaultSqlSession implements SqlSession {
   @Override
   public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
     try {
+      // 拿到MappedStatement对象
       // statement是包名和方法名的组合，唯一性。根据这个唯一的key，获取MappedStatement对象
       MappedStatement ms = configuration.getMappedStatement(statement);
       return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
@@ -323,6 +326,7 @@ public class DefaultSqlSession implements SqlSession {
     return (!autoCommit && dirty) || force;
   }
 
+  //将mapper方法的参数解析出来，放入StrictMap中
   private Object wrapCollection(final Object object) {
     //object封装了dao方法的参数，用mapper开发时，是代理对象封装的，参见ParamNameResolver类。用原生的session开发时是我们传入的
     //http://www.cnblogs.com/mingyue1818/p/3714162.html
