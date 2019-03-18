@@ -75,6 +75,8 @@ public class DefaultSqlSession implements SqlSession {
   @Override
   public <T> T selectOne(String statement, Object parameter) {
     // Popular vote was to return null on 0 results and throw exception on too many.
+    // statement是包名和方法名的组合，唯一性
+    // selectOne底层也是调用selectList方法
     List<T> list = this.<T>selectList(statement, parameter);
     if (list.size() == 1) {
       return list.get(0);
@@ -145,11 +147,13 @@ public class DefaultSqlSession implements SqlSession {
   @Override
   public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
     try {
+      // statement是包名和方法名的组合，唯一性。根据这个唯一的key，获取MappedStatement对象
       MappedStatement ms = configuration.getMappedStatement(statement);
       return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);
     } finally {
+      // 清空 ErrorContext 对象
       ErrorContext.instance().reset();
     }
   }
@@ -320,6 +324,8 @@ public class DefaultSqlSession implements SqlSession {
   }
 
   private Object wrapCollection(final Object object) {
+    //object封装了dao方法的参数，用mapper开发时，是代理对象封装的，参见ParamNameResolver类。用原生的session开发时是我们传入的
+    //http://www.cnblogs.com/mingyue1818/p/3714162.html
     if (object instanceof Collection) {
       StrictMap<Object> map = new StrictMap<>();
       map.put("collection", object);

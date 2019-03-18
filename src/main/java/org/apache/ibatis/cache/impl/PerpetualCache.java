@@ -27,6 +27,7 @@ import org.apache.ibatis.cache.CacheException;
  */
 public class PerpetualCache implements Cache {
 
+  // id的生成算法，见CacheKey类的update方法
   private final String id;
 
   // 这个cache用hashmap存储，比较简单

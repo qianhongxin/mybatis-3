@@ -141,14 +141,18 @@ public abstract class BaseExecutor implements Executor {
 
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+    // 根据参数获取sql
     BoundSql boundSql = ms.getBoundSql(parameter);
+    // 生成缓存的key
     CacheKey key = createCacheKey(ms, parameter, rowBounds, boundSql);
+    // 执行查询
     return query(ms, parameter, rowBounds, resultHandler, key, boundSql);
  }
 
   @SuppressWarnings("unchecked")
   @Override
   public <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql) throws SQLException {
+    // 设置 ErrorContext 对象的源，激活的操作，操作的对象标识（id就是select|insert|delete|update 节点中id属性的值。也对应mapper接口中的方法名。一个mapper中是唯一的）
     ErrorContext.instance().resource(ms.getResource()).activity("executing a query").object(ms.getId());
     if (closed) {
       throw new ExecutorException("Executor was closed.");
@@ -163,6 +167,7 @@ public abstract class BaseExecutor implements Executor {
       if (list != null) {
         handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
       } else {
+        // 从库中查询数据
         list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
       }
     } finally {
@@ -330,9 +335,12 @@ public abstract class BaseExecutor implements Executor {
   }
 
   private <E> List<E> queryFromDatabase(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql) throws SQLException {
+    // 接收查询的结果对象，E指的是我们dao方法指定的返回对象
     List<E> list;
     localCache.putObject(key, EXECUTION_PLACEHOLDER);
     try {
+      // 执行查询
+      // doQuery是抽象方法，根据Executor类型执行对应的实现，模板方法设计模式
       list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql);
     } finally {
       localCache.removeObject(key);

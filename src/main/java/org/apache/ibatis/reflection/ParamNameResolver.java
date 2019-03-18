@@ -48,7 +48,7 @@ public class ParamNameResolver {
   private final SortedMap<Integer, String> names;
 
   private boolean hasParamAnnotation;
-
+  //对mapper的方法的参数，进行封装，多个参数封装成集合或者数组
   public ParamNameResolver(Configuration config, Method method) {
     final Class<?>[] paramTypes = method.getParameterTypes();
     final Annotation[][] paramAnnotations = method.getParameterAnnotations();

@@ -25,6 +25,7 @@ import java.util.List;
 /**
  * @author Clinton Begin
  */
+// 处理statement执行后的结果，映射到返回的实体类对象上
 public interface ResultSetHandler {
 
   <E> List<E> handleResultSets(Statement stmt) throws SQLException;

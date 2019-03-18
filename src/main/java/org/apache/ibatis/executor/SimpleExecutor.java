@@ -55,9 +55,11 @@ public class SimpleExecutor extends BaseExecutor {
 
   @Override
   public <E> List<E> doQuery(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) throws SQLException {
+    // jdk中的Statement对象，java连接关系数据库提供的规范。jdbc访问数据库使用
     Statement stmt = null;
     try {
       Configuration configuration = ms.getConfiguration();
+      // 构造Statement对象的执行器
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
       stmt = prepareStatement(handler, ms.getStatementLog());
       return handler.<E>query(stmt, resultHandler);

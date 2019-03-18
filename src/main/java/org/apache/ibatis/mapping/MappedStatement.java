@@ -46,6 +46,7 @@ public final class MappedStatement {
   private SqlSource sqlSource;
   private Cache cache;
   private ParameterMap parameterMap;
+  // <ResultMap></ResultMap>标签相关属性，子节点信息
   private List<ResultMap> resultMaps;
   private boolean flushCacheRequired;
   private boolean useCache;
@@ -58,6 +59,8 @@ public final class MappedStatement {
   private String databaseId;
   private Log statementLog;
   private LanguageDriver lang;
+  // 这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称是逗号分隔的。
+  // https://blog.csdn.net/abcd898989/article/details/51189977
   private String[] resultSets;
 
   MappedStatement() {
@@ -293,6 +296,7 @@ public final class MappedStatement {
   }
   
   public BoundSql getBoundSql(Object parameterObject) {
+    // 一个MappedStatement对象对应一个insert/update/delete/select节点。MappedStatement中包含了节点的各项信息，其中sqlSource是构建sql的
     BoundSql boundSql = sqlSource.getBoundSql(parameterObject);
     List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
     if (parameterMappings == null || parameterMappings.isEmpty()) {

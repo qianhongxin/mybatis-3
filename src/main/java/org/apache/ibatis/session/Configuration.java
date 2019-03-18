@@ -153,6 +153,7 @@ public class Configuration {
 
   protected final LanguageDriverRegistry languageRegistry = new LanguageDriverRegistry();
 
+  //MappedStatement存储了每个curd节点的属性信息。
   protected final Map<String, MappedStatement> mappedStatements = new StrictMap<>("Mapped Statements collection");
   //配置的缓存
   protected final Map<String, Cache> caches = new StrictMap<>("Caches collection");

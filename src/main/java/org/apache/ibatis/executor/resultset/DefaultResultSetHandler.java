@@ -174,16 +174,17 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     }
   }
 
-  //
   // HANDLE RESULT SETS
-  //
+  // 处理结果集
   @Override
   public List<Object> handleResultSets(Statement stmt) throws SQLException {
+    // 设置当前的 ErrorContext 对象的激活操作，以及操作的 mybatis 的对象为 mappedStatement.getId()
     ErrorContext.instance().activity("handling results").object(mappedStatement.getId());
 
     final List<Object> multipleResults = new ArrayList<>();
 
     int resultSetCount = 0;
+    // 从Statement中拿到 sql 的执行结果
     ResultSetWrapper rsw = getFirstResultSet(stmt);
 
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();
