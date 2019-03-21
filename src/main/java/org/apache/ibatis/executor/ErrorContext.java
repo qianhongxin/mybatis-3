@@ -29,17 +29,17 @@ public class ErrorContext {
   private static final ThreadLocal<ErrorContext> LOCAL = new ThreadLocal<>();
 
   private ErrorContext stored;
-  // 错误的来源
+  // 错误的来源，即xml的名字
   private String resource;
-  // 错误发生的对象
+  // 错误发生操作，比如 execute an query，setting paramters等
   private String activity;
-  // 错误涉及到的对象
+  // 错误涉及到的对象id，即xml中insert，update，delete，select的id属性值
   private String object;
-  // 错误的描述信息
+  // 错误的描述信息，记录的是mybatis在启动，运行过程中抛出的异常对应的message
   private String message;
   // 发生错误的sql语句
   private String sql;
-  // 错误的堆栈
+  // 异常的堆栈
   private Throwable cause;
 
   private ErrorContext() {

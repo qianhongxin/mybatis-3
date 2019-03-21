@@ -205,6 +205,12 @@ public class DefaultSqlSession implements SqlSession {
       MappedStatement ms = configuration.getMappedStatement(statement);
       return executor.update(ms, wrapCollection(parameter));
     } catch (Exception e) {
+      // "Error updating database.  Cause: " + e -》+ e会调用e的toString()方法，如下：
+      //  public String toString() {
+      //        String s = getClass().getName();
+      //        String message = getLocalizedMessage();
+      //        return (message != null) ? (s + ": " + message) : s;
+      // }
       throw ExceptionFactory.wrapException("Error updating database.  Cause: " + e, e);
     } finally {
       ErrorContext.instance().reset();
