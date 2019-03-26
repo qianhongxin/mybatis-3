@@ -84,7 +84,7 @@ public class XMLMapperBuilder extends BaseBuilder {
 
   private XMLMapperBuilder(XPathParser parser, Configuration configuration, String resource, Map<String, XNode> sqlFragments) {
     super(configuration);
-    // 一个创建
+    // 创建 builderAssistant 对象，一个mapper.xml文件对应一个独有的 builderAssistant对象
     this.builderAssistant = new MapperBuilderAssistant(configuration, resource);
     this.parser = parser;
     this.sqlFragments = sqlFragments;
@@ -94,11 +94,11 @@ public class XMLMapperBuilder extends BaseBuilder {
   // 解析xml的mapper文件
   public void parse() {
     if (!configuration.isResourceLoaded(resource)) {
-      //解析 `<mapper />` 节点及其子节点
+      //解析mapper文件中 `<mapper />` 节点及其子节点
       configurationElement(parser.evalNode("/mapper"));
       //标记mapper已经加载过
       configuration.addLoadedResource(resource);
-      //将mapper类对象放在mapperRegistry中
+      //加载 mapper 类对象并放在mapperRegistry中，并标识此mapper文件已经被加载过
       bindMapperForNamespace();
     }
 
@@ -430,6 +430,7 @@ public class XMLMapperBuilder extends BaseBuilder {
   }
   //<mapper namespace="org.apache.ibatis.domain.blog.mappers.BlogMapper">...</mapper>
   private void bindMapperForNamespace() {
+    // mapper文件的<mapper namespace="org.apache.ibatis.domain.blog.mappers.BlogMapper"></mapper>的namespacee属性值，是对应这个mapper的dao类或接口
     String namespace = builderAssistant.getCurrentNamespace();
     if (namespace != null) {
       Class<?> boundType = null;
@@ -445,6 +446,7 @@ public class XMLMapperBuilder extends BaseBuilder {
           // to prevent loading again this resource from the mapper interface
           // look at MapperAnnotationBuilder#loadXmlResource
           configuration.addLoadedResource("namespace:" + namespace);
+          // 将dao的接口或类的字节码类对象 clazz 缓存起来
           configuration.addMapper(boundType);
         }
       }

@@ -62,6 +62,7 @@ public class SimpleExecutor extends BaseExecutor {
       // 构造Statement对象的执行器
       StatementHandler handler = configuration.newStatementHandler(wrapper, ms, parameter, rowBounds, resultHandler, boundSql);
       stmt = prepareStatement(handler, ms.getStatementLog());
+      // 引入handler原因：和springmvc一样，将公共逻辑抽出来，对修改关闭，对扩展开放
       return handler.<E>query(stmt, resultHandler);
     } finally {
       closeStatement(stmt);

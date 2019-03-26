@@ -48,3 +48,13 @@ https://blog.csdn.net/yerenyuan_pku/article/details/52387676
 
 jdbc编程的事务管理，就是用connection的commit方法来做的。mybatis，hibernate等orm框架用session
 封装的executor对象，executor封装了transaction对象，transaction封装了connection对象来做的
+
+
+关于预编译 sql 理解：
+这种方式能防范SQL注入的原理是在SQL参数未注入之前，提前对SQL语句进行预编译，而其后注入的参数将不会再进行SQL编译。
+也就是说其后注入进来的参数系统将不会认为它会是一条SQL语句，而默认其是一条一个参数。
+https://www.cnblogs.com/zouqin/p/5314827.html
+
+jdbc
+
+sharding-jdbc

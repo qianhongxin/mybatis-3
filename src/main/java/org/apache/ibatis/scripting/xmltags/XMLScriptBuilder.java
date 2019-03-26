@@ -34,9 +34,16 @@ import org.w3c.dom.NodeList;
  */
 public class XMLScriptBuilder extends BaseBuilder {
 
+  // context中是对应的curd节点，比如：
+  // <select resultMap="blogWithPosts" parameterType="int" id="selectBlogWithPostsUsingSubSelect">
+  //    select * from Blog where id = #{id}
+  //  </select>
   private final XNode context;
+  // 是否是动态 sql，默认值是 false
   private boolean isDynamic;
+  // 参数类型
   private final Class<?> parameterType;
+  // 动态sql语句中if，choose， when等的关键字处理器
   private final Map<String, NodeHandler> nodeHandlerMap = new HashMap<>();
 
   public XMLScriptBuilder(Configuration configuration, XNode context) {
@@ -64,6 +71,10 @@ public class XMLScriptBuilder extends BaseBuilder {
   }
 
   public SqlSource parseScriptNode() {
+    // context中是对应的curd节点，比如：
+    // <select resultMap="blogWithPosts" parameterType="int" id="selectBlogWithPostsUsingSubSelect">
+    //    select * from Blog where id = #{id}
+    //  </select>
     MixedSqlNode rootSqlNode = parseDynamicTags(context);
     SqlSource sqlSource = null;
     if (isDynamic) {

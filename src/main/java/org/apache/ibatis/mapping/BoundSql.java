@@ -35,6 +35,7 @@ import org.apache.ibatis.session.Configuration;
  */
 public class BoundSql {
 
+  // 真正要执行的sql，可能还有？占位符
   private final String sql;
   private final List<ParameterMapping> parameterMappings;
   private final Object parameterObject;

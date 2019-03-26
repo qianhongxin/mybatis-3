@@ -98,11 +98,12 @@ public class XMLConfigBuilder extends BaseBuilder {
       throw new BuilderException("Each XMLConfigBuilder can only be used once.");
     }
     parsed = true;
+    // 解析mybatis-config.xml文件中 configuration 节点
     parseConfiguration(parser.evalNode("/configuration"));
     return configuration;
   }
 
-  //解析mybatis-config的xml文件
+  //解析mybatis-config的 configuration 的各个子节点
   private void parseConfiguration(XNode root) {
     try {
       //issue #117 read properties first
@@ -406,6 +407,7 @@ public class XMLConfigBuilder extends BaseBuilder {
   //    <package name="org.apache.ibatis.builder.mapper"/>
   //  </mappers>
   private void mapperElement(XNode parent) throws Exception {
+    // parent 是<mappers></mappers>标签
     if (parent != null) {
       // 遍历<mappers>
       //        <mapper resource="org/apache/ibatis/autoconstructor/AutoConstructorMapper.xml"/>
