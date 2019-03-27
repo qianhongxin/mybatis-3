@@ -95,6 +95,8 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
    * spring-mybatis时，spring对connection，事务对象，sqlsession的创建都有自己的一套
    * spring-mybatis项目也是mybatis提供的，就跟dubbo支持spring一样，都是自己提供，spring只是提供扩展
    *
+   * （session，trancation，connection）每个线程都是独有一份的
+   *
    * execType 见ExecType枚举类
    * level 事务隔离级别
    * autoCommit 是否自动提交事务

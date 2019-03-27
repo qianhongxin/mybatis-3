@@ -144,7 +144,7 @@ public class Configuration {
 
   //<mappers>...</mappers>标签中的mapper文件
   protected final MapperRegistry mapperRegistry = new MapperRegistry(this);
-  //<plugins>...</plugins>标签中配置的拦截器
+  //<plugins>...</plugins>标签中配置的拦截器，记录了所有配置过的拦截器
   protected final InterceptorChain interceptorChain = new InterceptorChain();
   // 类型转换
   protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
@@ -569,8 +569,10 @@ public class Configuration {
   }
 
   public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
-    StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql);
-    statementHandler = (StatementHandler) interceptorChain.pluginAll(statementHandler);
+    // RoutingSatatementHandler是个包装类
+      StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql);
+    // 初始化拦截器
+      statementHandler = (StatementHandler) interceptorChain.pluginAll(statementHandler);
     return statementHandler;
   }
 

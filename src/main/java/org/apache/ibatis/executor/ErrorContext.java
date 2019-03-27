@@ -22,6 +22,15 @@ package org.apache.ibatis.executor;
 // https://blog.csdn.net/lqzkcx3/article/details/84944285
 
 // 记录一次sql执行的过程中，关键地方的错误记录，涉及activity，object，message，sql的。其他的异常还是throw出去的。ErrorContext相当于调用链监控的简化
+
+//ErrorContext：
+//        一个线程可能关联多个ErrorContext对象，因为可能会涉及多次查询等，比如插入操作可能会先查询主键，这两个语句sql不一样，所以回事两个ErrorContext关联通过stored字段；
+//        一个ErrorContext对象在一次执行过程中的部分属性可能会变动：
+//        例如：
+//        刚执行查询时：
+//        ErrorContext.instance().resource(ms.getResource()).activity("executing a query").object(ms.getId());
+//        执行到处理查询结果时：
+//        ErrorContext.instance().activity("handling results").object(mappedStatement.getId());
 public class ErrorContext {
 
   private static final String LINE_SEPARATOR = System.getProperty("line.separator","\n");

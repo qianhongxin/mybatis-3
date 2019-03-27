@@ -91,6 +91,7 @@ public class BatchExecutor extends BaseExecutor {
       Connection connection = getConnection(ms.getStatementLog());
       stmt = handler.prepare(connection, transaction.getTimeout());
       handler.parameterize(stmt);
+      // 调用jdbc访问数据库
       return handler.<E>query(stmt, resultHandler);
     } finally {
       closeStatement(stmt);
