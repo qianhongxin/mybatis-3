@@ -21,9 +21,10 @@ import java.util.Properties;
  * @author Clinton Begin
  */
 public interface Interceptor {
-
+  //执行拦截器方法
   Object intercept(Invocation invocation) throws Throwable;
 
+  // 创建interceptor对象，一般用mybatis提供的Plugin.wrap(...)方法
   Object plugin(Object target);
 
   void setProperties(Properties properties);

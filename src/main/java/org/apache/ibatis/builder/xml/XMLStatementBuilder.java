@@ -81,7 +81,7 @@ public class XMLStatementBuilder extends BaseBuilder {
     // 创建语句返回类型的resultType的class对象clazz
     Class<?> resultTypeClass = resolveClass(resultType);
     String resultSetType = context.getStringAttribute("resultSetType");
-    // 语句类型 STATEMENT, PREPARED, CALLABLE
+    // 语句类型 STATEMENT, PREPARED, CALLABLE，根据select|insert|delete|update标签上的statementType属性设置值，默认时PREPARED，预编译的
     StatementType statementType = StatementType.valueOf(context.getStringAttribute("statementType", StatementType.PREPARED.toString()));
     ResultSetType resultSetTypeEnum = resolveResultSetType(resultSetType);
 
