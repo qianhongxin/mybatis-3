@@ -73,7 +73,9 @@ public class ErrorContext {
   }
 
   // 将当前的线程的ErrorContext对象替换成stored存储的ErrorContext对象，做一个复原。该方法和store（）方法组队使用，用来处理在
-  // 一次sql调用时，一个线程需要有多个ErrorContext对象来记录调用链信息。这里的stored字段可以将很多个ErrorContext对象串联起来，类似于单链表。
+  // 一次sql调用时，一个线程需要有多个ErrorContext对象来记录调用链信息，每个ErrorContext对象都有自己的错误信息描述，一旦错误直接抛出。
+  // 这多个ErrorContext对象可以看成栈的特点，每次store()后，执行逻辑，执行完需要调用recall()将这个ErrorContext对象出站栈，继续下一个
+  // ErrorContext对象的操作，依此进行，直到最后一个ErrorContext对象，如果都没错，则一次执行流程完成返回结果。
   // tomcat中的Valve的next字段也是类似于这个逻辑。
 
   // 所以store() recall()两个方法时组队使用的：
@@ -123,6 +125,8 @@ public class ErrorContext {
   }
 
   // 将当前线程的ErrorContext相关变量置空，清楚Local中的对应ErrorContext对象
+  // 不用设置stored为空，local.remove（）后，当前线程的ErrorContext对象会被gc回收，stored的父
+  // 引用也就没有了，变成不可达状态，即也会被回收
   public ErrorContext reset() {
     resource = null;
     activity = null;
