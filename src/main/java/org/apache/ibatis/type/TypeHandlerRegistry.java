@@ -51,6 +51,7 @@ import org.apache.ibatis.io.Resources;
  * @author Clinton Begin
  * @author Kazuki Shimizu
  */
+// 类型处理器，mysql类型转java类型，Java类型转mysql类型
 public final class TypeHandlerRegistry {
 
   private final Map<JdbcType, TypeHandler<?>> JDBC_TYPE_HANDLER_MAP = new EnumMap<>(JdbcType.class);

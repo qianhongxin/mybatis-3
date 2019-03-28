@@ -40,8 +40,11 @@ public abstract class BaseStatementHandler implements StatementHandler {
 
   protected final Configuration configuration;
   protected final ObjectFactory objectFactory;
+  // 类型处理器，mysql类型转java类型，Java类型转mysql类型
   protected final TypeHandlerRegistry typeHandlerRegistry;
+  // 执行结果映射到具体对象的处理器
   protected final ResultSetHandler resultSetHandler;
+  // 参数绑定到sql的处理器
   protected final ParameterHandler parameterHandler;
 
   protected final Executor executor;

@@ -89,6 +89,7 @@ public class ReuseExecutor extends BaseExecutor {
       stmt = handler.prepare(connection, transaction.getTimeout());
       putStatement(sql, stmt);
     }
+    // 处理参数
     handler.parameterize(stmt);
     return stmt;
   }

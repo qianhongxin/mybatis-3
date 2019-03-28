@@ -1,6 +1,7 @@
 http://www.cnblogs.com/LittleHann/p/3695332.html
 
 一个jdbc例子
+Statement：
 public void executeSql(String sql)throws Exception
     {
         // 加载驱动
@@ -43,6 +44,15 @@ public void executeSql(String sql)throws Exception
             }
         }
     }
+
+
+
+PreparedStatement：
+PreparedStatement updateSales = con.prepareStatement("UPDATE COFFEES SET SALES = ? WHERE COF_NAME LIKE ? ");
+updateSales.setInt(1, 75);
+updateSales.setString(2, "Colombian");
+updateSales.executeUpdate();
+
 
 https://blog.csdn.net/yerenyuan_pku/article/details/52387676
 

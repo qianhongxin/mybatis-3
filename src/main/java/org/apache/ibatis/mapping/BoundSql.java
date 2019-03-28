@@ -33,6 +33,7 @@ import org.apache.ibatis.session.Configuration;
  *
  * @author Clinton Begin
  */
+// curd节点包含的sql相关的信息，比如解析出的sql串，传入的参数，参数映射器，额外的参数
 public class BoundSql {
 
   // 真正要执行的sql，可能还有？占位符
