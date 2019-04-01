@@ -83,6 +83,7 @@ public abstract class BaseStatementHandler implements StatementHandler {
     return parameterHandler;
   }
 
+  // 创建Statement，模版方法设计模式，具体statement对象创建，让具体的StatementHandler实现类创建
   @Override
   public Statement prepare(Connection connection, Integer transactionTimeout) throws SQLException {
     ErrorContext.instance().sql(boundSql.getSql());

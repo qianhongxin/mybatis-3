@@ -54,15 +54,18 @@ import org.apache.ibatis.io.Resources;
 // 类型处理器，mysql类型转java类型，Java类型转mysql类型
 public final class TypeHandlerRegistry {
 
+  // 存储jdbctype和typehandler的映射
   private final Map<JdbcType, TypeHandler<?>> JDBC_TYPE_HANDLER_MAP = new EnumMap<>(JdbcType.class);
   private final Map<Type, Map<JdbcType, TypeHandler<?>>> TYPE_HANDLER_MAP = new ConcurrentHashMap<>();
   private final TypeHandler<Object> UNKNOWN_TYPE_HANDLER = new UnknownTypeHandler(this);
+  // 存储Type的class对象和type的映射
   private final Map<Class<?>, TypeHandler<?>> ALL_TYPE_HANDLERS_MAP = new HashMap<>();
 
   private static final Map<JdbcType, TypeHandler<?>> NULL_TYPE_HANDLER_MAP = Collections.emptyMap();
 
   private Class<? extends TypeHandler> defaultEnumTypeHandler = EnumTypeHandler.class;
 
+  // 注册默认提供的TypeHandler
   public TypeHandlerRegistry() {
     register(Boolean.class, new BooleanTypeHandler());
     register(boolean.class, new BooleanTypeHandler());
@@ -377,6 +380,7 @@ public final class TypeHandlerRegistry {
         map = new HashMap<>();
         TYPE_HANDLER_MAP.put(javaType, map);
       }
+      // 一个Java 类型对应多个jdbc类型
       map.put(jdbcType, handler);
     }
     ALL_TYPE_HANDLERS_MAP.put(handler.getClass(), handler);

@@ -11,3 +11,24 @@ spring-mybatis会有自己的sqlsession，transaction等对象
 
 
 druid是怎么实现sql拦截处理的，影响mybatis的statment执行吗？
+
+
+两条线路：
+一条初始化线路
+一条运行线路
+
+
+比如TypeHandlerRegistry，TypeAliasRegistry都是ConcurrentHashMap，HashMap等存储的，map的查找和插入算法的学习
+
+Mybatis 的缓存，二级缓存，与redis等应用操作的缓存。有什么区别？
+答： mybatis的缓存都是mybatis自己实现的逻辑，我们操作redis，我们自己可以灵活控制，可以选择缓存更新算法等
+
+分页插件
+
+shardingjdbc，mybatis的插件实现分表的功能
+
+spring的多数据源和拦截器实现分库功能
+
+访问者模式
+
+mybatis-spring是将mybatis的创建工作用spring管理。事务和session交给spring操作

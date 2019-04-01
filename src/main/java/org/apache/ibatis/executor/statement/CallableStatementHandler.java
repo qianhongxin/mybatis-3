@@ -38,6 +38,7 @@ import org.apache.ibatis.type.JdbcType;
 /**
  * @author Clinton Begin
  */
+// 存储过程执行器
 public class CallableStatementHandler extends BaseStatementHandler {
 
   public CallableStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameter, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
