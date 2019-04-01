@@ -210,7 +210,7 @@ public class DefaultSqlSession implements SqlSession {
       //        String s = getClass().getName();
       //        String message = getLocalizedMessage();
       //        return (message != null) ? (s + ": " + message) : s;
-      // }
+      //  }
       throw ExceptionFactory.wrapException("Error updating database.  Cause: " + e, e);
     } finally {
       ErrorContext.instance().reset();
