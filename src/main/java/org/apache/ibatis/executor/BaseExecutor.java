@@ -60,7 +60,7 @@ public abstract class BaseExecutor implements Executor {
 
   //事务
   protected Transaction transaction;
-  //包装的executor对象
+  //包装的executor对象，装饰模式
   protected Executor wrapper;
 
   //延迟加载队列
@@ -348,8 +348,10 @@ public abstract class BaseExecutor implements Executor {
       // doQuery是抽象方法，根据Executor类型执行对应的实现，模板方法设计模式
       list = doQuery(ms, parameter, rowBounds, resultHandler, boundSql);
     } finally {
+      // 清空缓存
       localCache.removeObject(key);
     }
+    // 将输入加入缓存，1级缓存
     localCache.putObject(key, list);
     if (ms.getStatementType() == StatementType.CALLABLE) {
       localOutputParameterCache.putObject(key, parameter);
