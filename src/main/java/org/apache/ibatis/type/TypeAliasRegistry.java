@@ -39,6 +39,7 @@ public class TypeAliasRegistry {
 
   private final Map<String, Class<?>> TYPE_ALIASES = new HashMap<>();
 
+  // 注册默认提供的别名
   public TypeAliasRegistry() {
     registerAlias("string", String.class);
 

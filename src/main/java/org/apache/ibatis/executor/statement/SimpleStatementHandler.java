@@ -87,6 +87,7 @@ public class SimpleStatementHandler extends BaseStatementHandler {
     return resultSetHandler.<E>handleCursorResultSets(statement);
   }
 
+  //创建statement
   @Override
   protected Statement instantiateStatement(Connection connection) throws SQLException {
     if (mappedStatement.getResultSetType() == ResultSetType.DEFAULT) {
@@ -96,6 +97,9 @@ public class SimpleStatementHandler extends BaseStatementHandler {
     }
   }
 
+  // SimpleStatementHandler继承了 BaseStatementHandler抽象类。它底层使用
+  // java.sql.Statement 对象来完成数据库的相关操作 ， 所以 SQL 语句中不能存在 ？占位符 ， 相应的
+  // SimpleStatementHandler. parameterize()方法是空实现。
   @Override
   public void parameterize(Statement statement) throws SQLException {
     // N/A

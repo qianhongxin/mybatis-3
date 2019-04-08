@@ -49,6 +49,11 @@ import org.apache.ibatis.type.TypeHandlerRegistry;
  */
 // 执行器基类，这里有基本的实现，他有三个子类，用了模版方法设计模式，每个子类的执行逻辑不同
 // 比如doUpdate，doFlushStatements，doQuery等方法在子类中的实现逻辑不同
+  // BaseExecutor是一个实现了 Executor接口的抽象类 ，它实现了 Executor接口的大部分方法，
+// 其中就使用了模板方法模式。 BaseExecutor 中 主要提供了缓存管理和事务管理的基本功能，
+// 继 承 BaseExecutor 的子类只要实现四个基本方法来完成数据库的相关操作即可，这
+// 四个方法分别 是 : doUpdate()方法、 doQue可()方法、 doQueryCursor()方法、
+// doFlushStatement()方法，其余的功 能在 BaseExecutor 中实现。
 public abstract class BaseExecutor implements Executor {
 
   private static final Log log = LogFactory.getLog(BaseExecutor.class);

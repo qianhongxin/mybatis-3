@@ -113,9 +113,9 @@ public class XMLConfigBuilder extends BaseBuilder {
       Properties settings = settingsAsProperties(root.evalNode("settings"));
       // <3> 加载自定义 VFS 实现类
       loadCustomVfs(settings);
-      // <4> 解析 <typeAliases /> 标签
+      // <4> 解析 我们自己追加的 <typeAliases /> 标签
       typeAliasesElement(root.evalNode("typeAliases"));
-      // <5> 解析 <plugins /> 标签
+      // <5> 解析 我们自己追加的 <plugins /> 标签
       pluginElement(root.evalNode("plugins"));
       // <6> 解析 <objectFactory /> 标签
       objectFactoryElement(root.evalNode("objectFactory"));
@@ -130,7 +130,7 @@ public class XMLConfigBuilder extends BaseBuilder {
       environmentsElement(root.evalNode("environments"));
       // <11> 解析 <databaseIdProvider /> 标签
       databaseIdProviderElement(root.evalNode("databaseIdProvider"));
-      // <12> 解析 <typeHandlers /> 标签
+      // <12> 解析 我们自己追加的 <typeHandlers /> 标签
       typeHandlerElement(root.evalNode("typeHandlers"));
       // <13> 解析 <mappers /> 标签
       mapperElement(root.evalNode("mappers"));
@@ -367,7 +367,7 @@ public class XMLConfigBuilder extends BaseBuilder {
     throw new BuilderException("Environment declaration requires a DataSourceFactory.");
   }
 
-  //<typeHandlers>
+  //  <typeHandlers>
   //    <typeHandler javaType="String" handler="org.apache.ibatis.builder.CustomStringTypeHandler"/>
   //    <typeHandler javaType="String" jdbcType="VARCHAR" handler="org.apache.ibatis.builder.CustomStringTypeHandler"/>
   //    <typeHandler handler="org.apache.ibatis.builder.CustomLongTypeHandler"/>
