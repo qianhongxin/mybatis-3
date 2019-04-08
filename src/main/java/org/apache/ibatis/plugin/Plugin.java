@@ -27,6 +27,8 @@ import org.apache.ibatis.reflection.ExceptionUtil;
 
 /**
  * @author Clinton Begin
+ *
+ * 拦截器是用jdk动态代理实现
  */
 public class Plugin implements InvocationHandler {
 
