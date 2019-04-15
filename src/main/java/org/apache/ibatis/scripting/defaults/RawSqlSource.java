@@ -54,6 +54,7 @@ public class RawSqlSource implements SqlSource {
     return context.getSql();
   }
 
+  // 不重新创建sqlSource
   @Override
   public BoundSql getBoundSql(Object parameterObject) {
     return sqlSource.getBoundSql(parameterObject);

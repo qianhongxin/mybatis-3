@@ -93,6 +93,7 @@ public class XMLScriptBuilder extends BaseBuilder {
       if (child.getNode().getNodeType() == Node.CDATA_SECTION_NODE || child.getNode().getNodeType() == Node.TEXT_NODE) {
         String data = child.getStringBody("");
         TextSqlNode textSqlNode = new TextSqlNode(data);
+        // 包含${}占位符的，mybatis会认为是动态sql
         if (textSqlNode.isDynamic()) {
           contents.add(textSqlNode);
           isDynamic = true;

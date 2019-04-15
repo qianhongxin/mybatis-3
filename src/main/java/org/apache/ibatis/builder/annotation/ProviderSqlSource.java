@@ -99,6 +99,7 @@ public class ProviderSqlSource implements SqlSource {
     }
   }
 
+  // 每次重新创建sqlsource，然后拿到boundsql
   @Override
   public BoundSql getBoundSql(Object parameterObject) {
     SqlSource sqlSource = createSqlSource(parameterObject);

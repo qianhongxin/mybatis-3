@@ -24,6 +24,8 @@ import org.apache.ibatis.session.Configuration;
 
 /**
  * @author Clinton Begin
+ *
+ * 静态的sqlsource类，为上层的包装类型的Sqlsouuce类服务
  */
 public class StaticSqlSource implements SqlSource {
 

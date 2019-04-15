@@ -89,7 +89,7 @@ public class GenericTokenParser {
           builder.append(src, start, src.length - start);
           offset = src.length;
         } else {
-          // 具体的解析
+          // 具体的解析，解析到这一步，说明存在expression，比如${},#{}等
           builder.append(handler.handleToken(expression.toString()));
           offset = end + closeToken.length();
         }

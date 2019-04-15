@@ -26,6 +26,7 @@ import org.apache.ibatis.type.SimpleTypeRegistry;
  * @author Clinton Begin
  */
 public class TextSqlNode implements SqlNode {
+  //
   private final String text;
   private final Pattern injectionFilter;
 
@@ -67,6 +68,7 @@ public class TextSqlNode implements SqlNode {
       this.injectionFilter = injectionFilter;
     }
 
+    // 这里做了${}占位符的参数绑定操作
     @Override
     public String handleToken(String content) {
       Object parameter = context.getBindings().get("_parameter");
@@ -90,6 +92,7 @@ public class TextSqlNode implements SqlNode {
   
   private static class DynamicCheckerTokenParser implements TokenHandler {
 
+    // 默认是false
     private boolean isDynamic;
 
     public DynamicCheckerTokenParser() {
@@ -102,6 +105,7 @@ public class TextSqlNode implements SqlNode {
 
     @Override
     public String handleToken(String content) {
+      //执行到这里，说明sql中还有${}占位符，然后设置isDynamic是true
       this.isDynamic = true;
       return null;
     }

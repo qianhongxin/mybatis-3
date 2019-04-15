@@ -37,6 +37,7 @@ public class DynamicSqlSource implements SqlSource {
     this.rootSqlNode = rootSqlNode;
   }
 
+  // 每次执行都是重新构建sqlSource，然后获取BoundSql，因为可能条件不一样，拼出的sql不同
   @Override
   public BoundSql getBoundSql(Object parameterObject) {
     DynamicContext context = new DynamicContext(configuration, parameterObject);

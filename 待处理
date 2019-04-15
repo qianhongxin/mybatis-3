@@ -62,4 +62,10 @@ parameterize方法是空的实现，即用SimpleStatementHandler执行时，语�
 一般我们使用时，不指定statementtype，默认使用的是 PreparedStatement ，指定为 CallableStatement 时，CallableStatement也是PreparedStatement的子类，
 所以 PreparedStatement 和 CallableStatement 的参数都是用 ps.setParamater(...) 见 DefaultParameterHandler 的 setParameters 方法指定（如果存在${}或者#{}，即使不存在也可以）
 
-5. RawSqlSource DynamicSqlSource  ProviderSqlSource的区别？
+5. RawSqlSource：原始的sqlsource，只支持包含#{}，${}，非动态sql
+   DynamicSqlSource：动态sqlsource，支持${},#{},还支持动态sql
+   ProviderSqlSource：支持@ProviderXXX等注解形式的sqlsource，包含#{}，${}
+   StaticSqlSource：静态的sqlsource构建，为上面的几个服务
+
+
+6. java中boolean默认是false，Boolean默认是null
