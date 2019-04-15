@@ -31,6 +31,8 @@ import org.apache.ibatis.session.Configuration;
 /**
  * @author Clinton Begin
  * @author Kazuki Shimizu
+ *
+ * 基于注解，@Param 的sql来源构建，底层返回的是 StaticSqlSource，对StaticSqlSource的包装
  */
 public class ProviderSqlSource implements SqlSource {
 

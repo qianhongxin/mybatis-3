@@ -200,6 +200,7 @@ public class MapperAnnotationBuilder {
     Properties props = new Properties();
     for (Property property : properties) {
       props.setProperty(property.name(),
+          // 解析配置文件中的${}
           PropertyParser.parse(property.value(), configuration.getVariables()));
     }
     return props;

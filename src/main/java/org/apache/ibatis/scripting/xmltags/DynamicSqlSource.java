@@ -24,6 +24,8 @@ import org.apache.ibatis.session.Configuration;
 
 /**
  * @author Clinton Begin
+ *
+ * 动态sql的 sqlSource构建，底层返回的是 StaticSqlSource，对StaticSqlSource的包装
  */
 public class DynamicSqlSource implements SqlSource {
 

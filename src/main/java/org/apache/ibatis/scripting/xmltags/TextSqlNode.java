@@ -51,7 +51,8 @@ public class TextSqlNode implements SqlNode {
     context.appendSql(parser.parse(text));
     return true;
   }
-  
+
+  // ${}参数占位符的解析
   private GenericTokenParser createParser(TokenHandler handler) {
     return new GenericTokenParser("${", "}", handler);
   }

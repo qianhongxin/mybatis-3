@@ -181,6 +181,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     // 设置当前的 ErrorContext 对象的激活操作，以及操作的 mybatis 的对象为 mappedStatement.getId()
     ErrorContext.instance().activity("handling results").object(mappedStatement.getId());
 
+    // 拿到的是多结果集，存储过程调用时，返回的就是多结果集
     final List<Object> multipleResults = new ArrayList<>();
 
     int resultSetCount = 0;
