@@ -57,7 +57,7 @@ public class PropertyParser {
   }
 
   /**
-   * @Description: 变量token处理器，解析properties文件的配置
+   * @Description: 变量token处理器，解析properties文件的配置,sql中的${}参数等
    *
    * @Auther: 溪风
    * @Date: 2019/3/5 10:08
