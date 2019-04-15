@@ -44,3 +44,22 @@ mybatis-spring是将mybatis的创建工作用spring管理。事务和session交�
     将#{}替换成？
 
 3. mybatis默认时，所有的MappedStatement对象的statement类型都是PrepareStatement（参见XMLStatementBuilder类的parseStatementNode方法）
+
+4.      a. Statement:
+       普通的不带参的查询SQL；支持批量更新,批量删除;
+
+        b. PreparedStatement:
+   　　   可变参数的SQL,编译一次,执行多次,效率高;
+   　　   安全性好，有效防止Sql注入等问题;
+   　　   支持批量更新,批量删除;
+        c. CallableStatement:
+   　　继承自PreparedStatement,支持带参数的SQL操作;
+   　　支持调用存储过程,提供了对输出和输入/输出参数(INOUT)的支持;
+
+mybatis提供的 DefaultParameterHandler 用于处理 PreparedStatement 和 CallableStatement 的参数。基础的Statement没有参数处理，所以 SimpleStatementHandler 的
+parameterize方法是空的实现，即用SimpleStatementHandler执行时，语句没有${}或者#{}这种参数化，就是基本语句
+
+一般我们使用时，不指定statementtype，默认使用的是 PreparedStatement ，指定为 CallableStatement 时，CallableStatement也是PreparedStatement的子类，
+所以 PreparedStatement 和 CallableStatement 的参数都是用 ps.setParamater(...) 见 DefaultParameterHandler 的 setParameters 方法指定（如果存在${}或者#{}，即使不存在也可以）
+
+5. RawSqlSource DynamicSqlSource  ProviderSqlSource的区别？
