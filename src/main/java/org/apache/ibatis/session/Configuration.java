@@ -563,6 +563,7 @@ public class Configuration {
    *
    * 如果还想对其他对象实现拦截，需要自己定义对应方法，改写 Configuration 类，因为只有 Configuration 类中才有interceptorChain对象
    **/
+  // 得到的是代理对象
   // plugin可以处理的对象有ParameterHandler ResultSetHandler StatementHandler Executor
   public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
     ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement, parameterObject, boundSql);
@@ -570,6 +571,7 @@ public class Configuration {
     return parameterHandler;
   }
 
+  // 得到的是代理对象
   public ResultSetHandler newResultSetHandler(Executor executor, MappedStatement mappedStatement, RowBounds rowBounds, ParameterHandler parameterHandler,
       ResultHandler resultHandler, BoundSql boundSql) {
     ResultSetHandler resultSetHandler = new DefaultResultSetHandler(executor, mappedStatement, parameterHandler, resultHandler, boundSql, rowBounds);
@@ -577,6 +579,7 @@ public class Configuration {
     return resultSetHandler;
   }
 
+  // 得到的是代理对象
   public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql) {
     // RoutingSatatementHandler是个包装类
       StatementHandler statementHandler = new RoutingStatementHandler(executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql);
@@ -589,6 +592,7 @@ public class Configuration {
     return newExecutor(transaction, defaultExecutorType);
   }
 
+  // 得到的是代理对象
   public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
     executorType = executorType == null ? defaultExecutorType : executorType;
     executorType = executorType == null ? ExecutorType.SIMPLE : executorType;
