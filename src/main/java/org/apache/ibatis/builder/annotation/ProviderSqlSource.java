@@ -32,7 +32,7 @@ import org.apache.ibatis.session.Configuration;
  * @author Clinton Begin
  * @author Kazuki Shimizu
  *
- * 基于注解，@Param 的sql来源构建，底层返回的是 StaticSqlSource，对StaticSqlSource的包装
+ * 基于注解的sqlSource，底层返回的是 StaticSqlSource，对StaticSqlSource的包装
  */
 public class ProviderSqlSource implements SqlSource {
 
@@ -129,7 +129,7 @@ public class ProviderSqlSource implements SqlSource {
                 + " using a specifying parameterObject. In this case, please specify a 'java.util.Map' object.");
       }
       Class<?> parameterType = parameterObject == null ? Object.class : parameterObject.getClass();
-      // replacePlaceholder(sql)将PrepareStatement和CallbackStatement的sql做参数处理，处理#{}和${}类型的参数
+      // replacePlaceholder(sql)将sql做参数处理，处理#{}和${}类型的参数
       return sqlSourceParser.parse(replacePlaceholder(sql), parameterType, new HashMap<String, Object>());
     } catch (BuilderException e) {
       throw e;

@@ -37,7 +37,7 @@ import org.apache.ibatis.session.Configuration;
 // 一次可执行的 SQL 封装
 public class BoundSql {
 
-  // 真正要执行的sql，可能还有？占位符
+  // 真正要执行的sql，可能还有？占位符（如果是#{}形式）
   private final String sql;
   private final List<ParameterMapping> parameterMappings;
   private final Object parameterObject;

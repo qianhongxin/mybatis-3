@@ -176,7 +176,7 @@ public class SqlSessionTest extends BaseDataTest {
   @Test
   public void shouldSelectCountOfPosts() {
     try (SqlSession session = sqlMapper.openSession()) {
-      Integer count = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectCountOfPosts");
+      Integer count = session.selectOne("org.apache.ibatis.domain.blog.mappers.BlogMapper.selectPostsForBlog", 1);
       assertEquals(5, count.intValue());
     }
   }

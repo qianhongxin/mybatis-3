@@ -556,6 +556,13 @@ public class Configuration {
     return MetaObject.forObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
   }
 
+  /**
+   * Mybatis拦截器只能拦截四种类型的接口：Executor、StatementHandler、ParameterHandler和ResultSetHandler.
+   * 这是在Mybatis的Configuration中写死了的，如果要支持拦截其他接口就需要我们重写Mybatis的Configuration。Mybatis可以对这四个接口
+   * 中所有的方法进行拦截。
+   *
+   * 如果还想对其他对象实现拦截，需要自己定义对应方法，改写 Configuration 类，因为只有 Configuration 类中才有interceptorChain对象
+   **/
   // plugin可以处理的对象有ParameterHandler ResultSetHandler StatementHandler Executor
   public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
     ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement, parameterObject, boundSql);
@@ -582,7 +589,6 @@ public class Configuration {
     return newExecutor(transaction, defaultExecutorType);
   }
 
-  // 根据
   public Executor newExecutor(Transaction transaction, ExecutorType executorType) {
     executorType = executorType == null ? defaultExecutorType : executorType;
     executorType = executorType == null ? ExecutorType.SIMPLE : executorType;

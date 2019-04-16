@@ -42,11 +42,14 @@ public class Plugin implements InvocationHandler {
     this.signatureMap = signatureMap;
   }
 
+  // 判断interceptor是否支持target拦截，支持则创建target的代理对象，否则原样返回target
+  // 如果一个对象适配多个interceptor，则会被多次代理
   public static Object wrap(Object target, Interceptor interceptor) {
     Map<Class<?>, Set<Method>> signatureMap = getSignatureMap(interceptor);
     Class<?> type = target.getClass();
     Class<?>[] interfaces = getAllInterfaces(type, signatureMap);
     if (interfaces.length > 0) {
+      // 创建interfaces接口的代理类对象。利用的是JDK动态代理，所以Plugin类只支持接口形式的代理对象生成，其他的形式需要自己写，不能用这个mybatis提供的Plugin类了
       return Proxy.newProxyInstance(
           type.getClassLoader(),
           interfaces,
@@ -69,11 +72,13 @@ public class Plugin implements InvocationHandler {
   }
 
   private static Map<Class<?>, Set<Method>> getSignatureMap(Interceptor interceptor) {
+    // 获取 Intercepts
     Intercepts interceptsAnnotation = interceptor.getClass().getAnnotation(Intercepts.class);
     // issue #251
     if (interceptsAnnotation == null) {
       throw new PluginException("No @Intercepts annotation was found in interceptor " + interceptor.getClass().getName());      
     }
+    // 获取所有 Signature
     Signature[] sigs = interceptsAnnotation.value();
     Map<Class<?>, Set<Method>> signatureMap = new HashMap<>();
     for (Signature sig : sigs) {
@@ -85,9 +90,12 @@ public class Plugin implements InvocationHandler {
         throw new PluginException("Could not find method on " + sig.type() + " named " + sig.method() + ". Cause: " + e, e);
       }
     }
+
+    // 存储 接口字节码对象 和 接口方法字节码对象 的映射（对象是Executor、StatementHandler、ParameterHandler和ResultSetHandler 四个接口中的一种）
     return signatureMap;
   }
 
+  // 判断目标对象（Executor、StatementHandler、ParameterHandler和ResultSetHandler四个接口中的一种）是否有拦截器拦截
   private static Class<?>[] getAllInterfaces(Class<?> type, Map<Class<?>, Set<Method>> signatureMap) {
     Set<Class<?>> interfaces = new HashSet<>();
     while (type != null) {

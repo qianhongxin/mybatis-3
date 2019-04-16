@@ -1,3 +1,5 @@
+注意：调试包中调试
+
 数据源中的push和pop方法逻辑，流程图
 
 xpath解析原理
@@ -67,11 +69,26 @@ parameterize方法是空的实现，即用SimpleStatementHandler执行时，语�
    ProviderSqlSource：支持@ProviderXXX等注解形式的sqlsource，包含#{}，${}
    StaticSqlSource：静态的sqlsource构建，为上面的几个服务
 
+   注意：
+   只要语句中含有${}，不管有没有#{}，不管有没有if，where等标签: 使用的都是DynamicSqlSource，因为${}占位符是mybatis每次都要重新解析sql，将参数赋值进去
+   语句只有#{}或没有参数占位符：使用的是RawSqlSource
+   注解形式的mappedStatement，比如@Select等：使用的是 ProviderSqlSource
+
 
 6. java中boolean默认是false，Boolean默认是null
 
+7. SqlSource是用来创建BoundSql对象，SqlSource有多种形式。见5
 
-明天调试：
-语句只有${}
-语句只有#{}
-二者皆有，看sqlSource用的什么？？？？
+8. 每次curd都会产生新的BoundSql对象
+
+9.  拦截器的一个作用就是我们可以拦截某些方法的调用，我们可以选择在这些被拦截的方法执行前后加上某些逻辑，
+也可以在执行这些被拦截的方法时执行自己的逻辑而不再执行被拦截的方法。Mybatis拦截器设计的一个初衷就是为了供用户在某些时候
+可以实现自己的逻辑而不必去动Mybatis固有的逻辑。打个比方，对于Executor，Mybatis中有几种实现：BatchExecutor、ReuseExecutor、
+SimpleExecutor和CachingExecutor。这个时候如果你觉得这几种实现对于Executor接口的query方法都不能满足你的要求，那怎么办呢？是要
+去改源码吗？当然不。我们可以建立一个Mybatis拦截器用于拦截Executor接口的query方法，在拦截之后实现自己的query方法逻辑，之后可以选
+择是否继续执行原来的query方法。
+
+不错的文章：
+https://blog.csdn.net/u012089657/article/details/49763631
+
+

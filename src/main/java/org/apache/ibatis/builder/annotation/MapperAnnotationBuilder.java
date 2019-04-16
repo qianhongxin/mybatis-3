@@ -93,6 +93,8 @@ import org.apache.ibatis.type.UnknownTypeHandler;
 /**
  * @author Clinton Begin
  * @author Kazuki Shimizu
+ *
+ * 解析注解形式的mybatis配置
  */
 public class MapperAnnotationBuilder {
 

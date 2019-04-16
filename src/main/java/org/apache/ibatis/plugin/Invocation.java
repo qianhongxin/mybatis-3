@@ -20,9 +20,11 @@ import java.lang.reflect.Method;
 
 /**
  * @author Clinton Begin
+ *
+ *
  */
 public class Invocation {
-
+  // 这里的target可能是经过代理的，也可能是未经过代理的
   private final Object target;
   private final Method method;
   private final Object[] args;

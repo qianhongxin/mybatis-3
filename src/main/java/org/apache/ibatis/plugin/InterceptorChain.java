@@ -23,7 +23,7 @@ import java.util.List;
  * @author Clinton Begin
  */
 public class InterceptorChain {
-  // 所有配置的拦截器
+  // 所有已经配置的拦截器
   private final List<Interceptor> interceptors = new ArrayList<>();
 
   public Object pluginAll(Object target) {

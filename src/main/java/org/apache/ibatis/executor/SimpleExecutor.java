@@ -68,6 +68,7 @@ public class SimpleExecutor extends BaseExecutor {
       // 引入handler原因：和springmvc一样，将公共逻辑抽出来，对修改关闭，对扩展开放
       return handler.<E>query(stmt, resultHandler);
     } finally {
+      // 关闭Statement
       closeStatement(stmt);
     }
   }

@@ -47,7 +47,7 @@
   </select>
 
   <select id="selectPostsForBlog" parameterType="int" resultType="Post">
-    select * from Post where blog_id = #{blog_id}
+    select * from Post where blog_id = ${blog_id}
   </select>
 
   <select id="selectCountOfPosts" resultType="int">
