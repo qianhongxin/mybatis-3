@@ -88,6 +88,9 @@ SimpleExecutor和CachingExecutor。这个时候如果你觉得这几种实现对
 去改源码吗？当然不。我们可以建立一个Mybatis拦截器用于拦截Executor接口的query方法，在拦截之后实现自己的query方法逻辑，之后可以选
 择是否继续执行原来的query方法。
 
+10. mybatis-spring中在一个线程中缓存了sqlsession。但是线程结束，下次再来就又是新的。同一个sqlsession中一级缓存是开启的，用的CacheingExecutor，操作都是从缓存取数据。
+这样就不会被插件代理。但是其他线程，新来线程依然是要四大对象（Executor 的方法、 ParameterHandler 的方法、 ResultSetHandler 的 方法 以及 StatementHandler 的方法）被代理，只要匹配
+
 不错的文章：
 https://blog.csdn.net/u012089657/article/details/49763631
 
