@@ -26,6 +26,7 @@ public class InterceptorChain {
   // 所有已经配置的拦截器
   private final List<Interceptor> interceptors = new ArrayList<>();
 
+  // 给传入的 target 对象，匹配拦截器。返回被interceptor代理后的对象
   public Object pluginAll(Object target) {
     for (Interceptor interceptor : interceptors) {
       target = interceptor.plugin(target);

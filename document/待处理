@@ -91,6 +91,10 @@ SimpleExecutor和CachingExecutor。这个时候如果你觉得这几种实现对
 10. mybatis-spring中在一个线程中缓存了sqlsession。但是线程结束，下次再来就又是新的。同一个sqlsession中一级缓存是开启的，用的CacheingExecutor，操作都是从缓存取数据。
 这样就不会被插件代理。但是其他线程，新来线程依然是要四大对象（Executor 的方法、 ParameterHandler 的方法、 ResultSetHandler 的 方法 以及 StatementHandler 的方法）被代理，只要匹配
 
+11. mapper代理开发：
+我们写的dao接口，代理类的invoke方法中做了固定的 session 调用，不用我们写dao的实现类方法。因为逻辑时固定的。和手动操作session调用一样
+但是mapper开发时，dao的类名和方法名组合后必须和xml的namespace+id的组合一样才行。因为mapper的invoke方法中根据这个找statement
+
 不错的文章：
 https://blog.csdn.net/u012089657/article/details/49763631
 
