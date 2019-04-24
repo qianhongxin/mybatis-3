@@ -151,9 +151,11 @@ public class DefaultSqlSession implements SqlSession {
     try {
       // 拿到MappedStatement对象
       // statement是包名和方法名的组合，唯一性。根据这个唯一的key，获取MappedStatement对象
+      // 这个MappedStatement对象创建后是单例的
       MappedStatement ms = configuration.getMappedStatement(statement);
       // 策略模式的使用，不同的executor有不同的查询实现。这里的sqlsession就是策略模式中的context，executor
       // 就是strategy
+      // executor是sqlsession创建时创建的
       return executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
     } catch (Exception e) {
       throw ExceptionFactory.wrapException("Error querying database.  Cause: " + e, e);

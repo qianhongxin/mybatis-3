@@ -95,6 +95,19 @@ SimpleExecutor和CachingExecutor。这个时候如果你觉得这几种实现对
 我们写的dao接口，代理类的invoke方法中做了固定的 session 调用，不用我们写dao的实现类方法。因为逻辑时固定的。和手动操作session调用一样
 但是mapper开发时，dao的类名和方法名组合后必须和xml的namespace+id的组合一样才行。因为mapper的invoke方法中根据这个找statement
 
+12. mybatis的启动是mybatis-spring调用启动的，解析xml等。也可以自己启动，看测试类AutoConstructorTest
+
+13。 默认，Executor是SimpleExecutor，Handler是PrepareHandler
+
+14。 mybatis的缓存操作方案，可以学习。我们操作redis和mysql的时机可以参考
+
+15。 当打开新session时，就要新建executor，那就必须要新建paramterhandler和resultsethandler等。因为executor是新建的，有新的statement需要处理。有新的参数传入，需要重新处理。
+其实这是mybatis这样的设计的。他可能考虑的是扩展性，才每次都要新建对象，其实完全可以单例，将字段作为方法参数。这样就能通用。但是他可能考虑多肽。以后可以在xml中配置不同的处理器。
+所以这也可能就是设计的复杂，操作耗时就会增多
+
+16。大致执行流程（不含cache）：
+创建session{executor} -> statementhandler{paramterhandler,resultsethandler} -> statement -> statementhandler.handler(statement) -> resultsethandler处理结果返回
+
 不错的文章：
 https://blog.csdn.net/u012089657/article/details/49763631
 
