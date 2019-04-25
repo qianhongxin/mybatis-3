@@ -59,7 +59,7 @@ public class Plugin implements InvocationHandler {
     // 如果 interfaces 的大小大于 0，则给 target 对象创建代理对象。否则不创建代理对象
     if (interfaces.length > 0) {
 
-      // 创建 target 的代理类对象。利用的是 JDK 动态代理
+      // 创建 target 的代理类对象。利用的是 JDK 动态代理。代理类$Proxy的字节码生成后会缓存在内存中，不用
       return Proxy.newProxyInstance(type.getClassLoader(), interfaces, new Plugin(target, interceptor, signatureMap));
     }
     return target;

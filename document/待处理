@@ -38,6 +38,15 @@ mybatis-spring是将mybatis的创建工作用spring管理。事务和session交�
 
 
 总结：
+0. mybatis本身是分层架构
+
+单个软件看起来就是分层架构，因为是方法调用，数据流转。可以看成分层。
+然后高内聚低耦合设计。
+
+加入mvc设计就是imvc架构等
+高内聚，低耦合。是和语言无关的
+
+
 参数占位符：
 1. ${}是在构建sqlSource时就处理掉了，通过GenericTokenParser parser = new GenericTokenParser("${", "}", handler);处理替换掉,见PropertieyParse
 2. #{}是在 SqlSourceBuilder 阶段构建的，所有的SqlSource实现最后在构建阶段都会调用SqlSourceBuilder的parse方法，其中做了如下处理：
@@ -108,7 +117,27 @@ SimpleExecutor和CachingExecutor。这个时候如果你觉得这几种实现对
 16。大致执行流程（不含cache）：
 创建session{executor} -> statementhandler{paramterhandler,resultsethandler} -> statement -> statementhandler.handler(statement) -> resultsethandler处理结果返回
 
+17. 类加载器
+类的字节码加载到内存，只需要一次即可。失去了会重新加载
+jdk动态代理涉及到的类Proxy，WeakCache，ProxyClassFactory，ProxyGenerator
+
+
+18. scripting模块：动态sql处理相关的类
+mapping模块：保存映射相关的类，比如参数映射，返回值映射等
+executor模块：保存执行器相关的类
+binding模块：保存dao接口开发时，dao代理对象和statement的绑定映射关系
+builder模块：保存解析xml和注解的类
+cache模块：mybatis缓存操作的类
+cursor模块：mybatis游标操作的类
+datasource模块：数据源的类
+exceptions:异常类
+
+19. mybatis-spring：
+将工厂类对象注入到spring即可。其他的mybatis核心对象有扩展点加载启动创建，不直接放入spring容器中。想获取他们需要通过工厂对象
+
 不错的文章：
 https://blog.csdn.net/u012089657/article/details/49763631
+
+掘金markdown写作语法：https://juejin.im/post/5bd1423751882526f11d4fe2
 
 
