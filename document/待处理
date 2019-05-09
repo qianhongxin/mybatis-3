@@ -135,6 +135,18 @@ exceptions:异常类
 19. mybatis-spring：
 将工厂类对象注入到spring即可。其他的mybatis核心对象有扩展点加载启动创建，不直接放入spring容器中。想获取他们需要通过工厂对象
 
+20.分库分表的sharding-jdbc。mybatis，hibernate，多数据源等都是基于jdbc来开发的。有jdbc能做很多事
+
+21. 关于 executorType 更改：
+1. 可以在mybatis-config.xml中的setting的标签的propertis标签设置，key为 defaultExecutorType，参见XMLConfigBuilder的parseConfiguration方法的
+ settingsElement(settings);这一句设置configuration属性的，可以设置defaultExecutorType。默认时defaultExecutorType时SIMPLE。
+2. 还可以在创建session时修改。在 SqlSessionFactory.getSqlSession时，可以传想要的类型。但是这种需要手动操作SqlSessionFactory，不方便
+
+22. 各种executorType作用：
+SIMPLE：每次都是新建statement对象
+REUSE：重复利用statement,当前session没有关闭就可以。如果关闭了，也就消除了
+BATCH：这个执行器类型会批量执行所有的更新语句，也是为每个语句的执行创建一个新的预处理语句
+
 不错的文章：
 https://blog.csdn.net/u012089657/article/details/49763631
 
