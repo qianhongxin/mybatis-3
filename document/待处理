@@ -9,7 +9,8 @@ parsing模块，GenericTokenParser的解析逻辑
 binding中的mapper生成
 
 
-spring-mybatis会有自己的sqlsession，transaction等对象
+spring-mybatis会有自己的sqlsession，transaction等对象.底层还是DefaultSqlSession
+
 
 
 druid是怎么实现sql拦截处理的，影响mybatis的statment执行吗？

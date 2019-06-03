@@ -38,7 +38,7 @@ import java.util.concurrent.locks.ReadWriteLock;
  *
  * @author Clinton Begin
  */
-// 这里提供的Cache都是二级缓存，三级缓存一般就是redis，memcache，ecache等
+// 这里提供的Cache都是一级缓存，二级缓存时sqlsessionfactory级别，三级缓存一般就是redis，memcache，ecache等
 // 这里用了装饰模式，比如带日志打印的cache，阻塞缓存等，decorators包下的类都是
 // redis的缓存数据结构比较多，选择性更高
 public interface Cache {
