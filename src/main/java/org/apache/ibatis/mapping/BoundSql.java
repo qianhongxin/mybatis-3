@@ -38,9 +38,13 @@ import org.apache.ibatis.session.Configuration;
 public class BoundSql {
 
   // 真正要执行的sql，可能还有？占位符（如果是#{}形式）
+  // 进行 #{ } 和 ${ } 替换完毕之后的结果sql, 注意每个 #{ }替换完之后就是一个 ?
   private final String sql;
+  // 这里的parameterMappings列表参数里的item个数, 以及每个item的属性名称等等, 都是和上面的sql中的 ? 完全一一对应的.
   private final List<ParameterMapping> parameterMappings;
+  // 用户传入的数据
   private final Object parameterObject;
+  //当使用动态 SQL 时，可能会产生临时的参数，这些参数需要手动设置到新的 BoundSql 中。比如"_databaseId" 参数等
   private final Map<String, Object> additionalParameters;
   private final MetaObject metaParameters;
 
