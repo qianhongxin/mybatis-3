@@ -32,6 +32,7 @@ import org.apache.ibatis.reflection.ExceptionUtil;
  */
 public class Plugin implements InvocationHandler {
 
+  // target可能是Executor、StatementHandler、ParameterHandler和ResultSetHandler四个接口的代理类对象，也可能就是实际的Executor、StatementHandler、ParameterHandler和ResultSetHandler四个接口的对象
   private final Object target;
 
   private final Interceptor interceptor;
@@ -59,7 +60,7 @@ public class Plugin implements InvocationHandler {
     // 如果 interfaces 的大小大于 0，则给 target 对象创建代理对象。否则不创建代理对象
     if (interfaces.length > 0) {
 
-      // 创建 target 的代理类对象。利用的是 JDK 动态代理。代理类$Proxy的字节码生成后会缓存在内存中，不用
+      // 创建 target 的代理类对象, 如果是Executor，则返回的就是Excutor的代理类对象。利用的是 JDK 动态代理。代理类$Proxy的字节码生成后会缓存在内存中，不用
       return Proxy.newProxyInstance(type.getClassLoader(), interfaces, new Plugin(target, interceptor, signatureMap));
     }
     return target;
