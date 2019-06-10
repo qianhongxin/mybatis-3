@@ -153,4 +153,14 @@ https://blog.csdn.net/u012089657/article/details/49763631
 
 掘金markdown写作语法：https://juejin.im/post/5bd1423751882526f11d4fe2
 
+23. 每次创建sqlsession时，默认创建的executor都是cachingexecutor，一级缓存是开启的
+
+24. Executor有两个query方法，A支持定义key和BoundSql，B不支持。后者用于sqlSession中调用，前者是在executor的实现类中操作的，它支持修改BoundSql，不用非要用MappedStatement中的BoundSql。写自定义插件时，多个插件可能会影响，因为，a插件可能执行的时候底层调用的是A，而我们写的只是拦截B，又因为A被别的拦截器拦截了，所以影响了我们的插件方法执行。具体见博客：
+
+
+文章：
+executor中两个query方法区别，多个插件相互的影响？
+
+
+
 

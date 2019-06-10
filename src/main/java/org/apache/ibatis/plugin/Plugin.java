@@ -72,7 +72,7 @@ public class Plugin implements InvocationHandler {
     try {
       // 获取 method 所属类或接口的字节码对象
       Set<Method> methods = signatureMap.get(method.getDeclaringClass());
-      // 判断 methods 中是否包括 method，包含则执行 拦截器的 intercept 方法
+      // 判断 methods 中是否包括 method，包含则执行 拦截器的 intercept 方法。 代理创建时，不会根据method判断是否创建，只要type等格式对就创建
       if (methods != null && methods.contains(method)) {
         return interceptor.intercept(new Invocation(target, method, args));
       }
