@@ -146,7 +146,7 @@ exceptions:异常类
 22. 各种executorType作用：
 SIMPLE：每次都是新建statement对象
 REUSE：重复利用statement,当前session没有关闭就可以。如果关闭了，也就消除了
-BATCH：这个执行器类型会批量执行所有的更新语句，也是为每个语句的执行创建一个新的预处理语句
+BATCH：这个执行器类型会批量执行所有的更新语句，也是为每个语句的执行创建一个新的预处理语句。我们通常的mybatis只是REUSE类型
 
 不错的文章：
 https://blog.csdn.net/u012089657/article/details/49763631
