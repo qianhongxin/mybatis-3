@@ -48,7 +48,9 @@ public final class MappedStatement {
   private ParameterMap parameterMap;
   // <ResultMap></ResultMap>标签相关属性，子节点信息
   private List<ResultMap> resultMaps;
+  // 是否刷新缓存
   private boolean flushCacheRequired;
+  // 是否使用二级缓存，默认是false。可以在mapper文件的select节点中通过useCache属性开启
   private boolean useCache;
   private boolean resultOrdered;
   private SqlCommandType sqlCommandType;

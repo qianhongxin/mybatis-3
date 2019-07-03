@@ -146,7 +146,7 @@ exceptions:异常类
 22. 各种executorType作用：
 SIMPLE：每次都是新建statement对象
 REUSE：重复利用statement,当前session没有关闭就可以。如果关闭了，也就消除了
-BATCH：这个执行器类型会批量执行所有的更新语句，也是为每个语句的执行创建一个新的预处理语句
+BATCH：这个执行器类型会批量执行所有的更新语句，也是为每个语句的执行创建一个新的预处理语句。我们通常的mybatis只是REUSE类型
 
 不错的文章：
 https://blog.csdn.net/u012089657/article/details/49763631
@@ -157,6 +157,8 @@ https://blog.csdn.net/u012089657/article/details/49763631
 
 24. Executor有两个query方法，A支持定义key和BoundSql，B不支持。后者用于sqlSession中调用，前者是在executor的实现类中操作的，它支持修改BoundSql，不用非要用MappedStatement中的BoundSql。写自定义插件时，多个插件可能会影响，因为，a插件可能执行的时候底层调用的是A，而我们写的只是拦截B，又因为A被别的拦截器拦截了，所以影响了我们的插件方法执行。具体见博客：
 
+25. mybatis-spring项目中，一个session和一个线程关联。一个线程最多只能关联一个session。这跟jdbc设计有关，jdbc底层是bio模型。如果数据库调用没返回就一直等待返回。期间
+线程被阻塞的直到结果返回。多个线程就是多个session。
 
 25。executor中两个query方法区别：
 1。 // 查询，带 ResultHandler + CacheKey + BoundSql
