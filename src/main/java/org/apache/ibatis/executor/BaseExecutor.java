@@ -65,7 +65,7 @@ public abstract class BaseExecutor implements Executor {
 
   //延迟加载队列
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
-  //本地缓存，也即一级缓存
+  //本地缓存
   protected PerpetualCache localCache;
   //本地输出类型的参数的缓存
   protected PerpetualCache localOutputParameterCache;
