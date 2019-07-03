@@ -38,7 +38,7 @@ import java.util.concurrent.locks.ReadWriteLock;
  *
  * @author Clinton Begin
  */
-// 这里提供的Cache都是一级缓存，见MappedStatement的cache
+// 一级缓存，见 MappedStatement 的cache。一级缓存可以作用在MappedStatement级别，或者session级别。默认是sqlsession级别。见LocalCacheScope
 
 // 二级缓存的原理和一级缓存原理一样，第一次查询，会将数据放入缓存中，然后第二次查询则会直接去缓存中取。
 // 但是一级缓存是基于 sqlSession 的，而 二级缓存是基于 mapper文件的namespace的，也就是说多个sqlSession可以共享
