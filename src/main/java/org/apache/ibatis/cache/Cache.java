@@ -38,10 +38,10 @@ import java.util.concurrent.locks.ReadWriteLock;
  *
  * @author Clinton Begin
  */
-// 一级缓存，见 MappedStatement 的cache。一级缓存可以作用在MappedStatement级别，或者session级别。默认是sqlsession级别。见LocalCacheScope
+// 一级缓存，见 BaseExecutor 的 localCache 。一级缓存可以作用在 Statement 级别，或者 sqlsession 级别。默认是 sqlsession 级别(见Configuration的localCache)。见LocalCacheScope
 
 // 二级缓存的原理和一级缓存原理一样，第一次查询，会将数据放入缓存中，然后第二次查询则会直接去缓存中取。
-// 但是一级缓存是基于 sqlSession 的，而 二级缓存是基于 mapper文件的namespace的，也就是说多个sqlSession可以共享
+// 但是一级缓存是基于 BaseExecutor 的，而 二级缓存是基于 mapper文件的namespace的，也就是说多个sqlSession可以共享，SqlSessionFactory级别
 // 一个mapper中的二级缓存区域，并且如果两个mapper的namespace相同，即使是两个mapper，那么这两个mapper中执行sql查询
 // 到的数据也将存在相同的二级缓存区域中。见Configuration的caches
 
@@ -49,6 +49,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 
 // 这里用了装饰模式，比如带日志打印的cache，阻塞缓存等，decorators包下的类都是
 // redis的缓存数据结构比较多，选择性更高
+
+// Cache是Mybatis的缓存接口，一级缓存，二级缓存的实现可以从这边的实现中取。还可以自定义实现对接redis等，实现分布式缓存
 public interface Cache {
 
   /**

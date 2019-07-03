@@ -65,7 +65,7 @@ public abstract class BaseExecutor implements Executor {
 
   //延迟加载队列
   protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
-  //本地缓存
+  //Mybatis的一级缓存
   protected PerpetualCache localCache;
   //本地输出类型的参数的缓存
   protected PerpetualCache localOutputParameterCache;
@@ -168,6 +168,7 @@ public abstract class BaseExecutor implements Executor {
     List<E> list;
     try {
       queryStack++;
+      // 从一级缓存中查
       list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
       if (list != null) {
         handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
@@ -184,6 +185,7 @@ public abstract class BaseExecutor implements Executor {
       }
       // issue #601
       deferredLoads.clear();
+      // 如果一级缓存是STATEMENT级别，则立即情况缓存。Session级别的不立即清空
       if (configuration.getLocalCacheScope() == LocalCacheScope.STATEMENT) {
         // issue #482
         clearLocalCache();
