@@ -10,6 +10,21 @@
 
 ps. 源码放到github
 
+(guava cache, Caffeine 进程内业务代码操作的缓存
+mybatis，等是框架自有的缓存
+memcache，redis等分布式缓存)
+
+(
+https://elim.iteye.com/blog/2123030
+从3.1开始，Spring引入了对Cache的支持。其使用方法和原理都类似于Spring对事务管理的支持。Spring Cache是作用在方法上的，其核心思想是这样的：当我们在调用一个缓存方法时会把该方法参数和返回结果作为一个键值对存放在缓存中，等到下次利用同样的参数来调用该方法时将不再执行该方法，而是直接从缓存中获取结果进行返回。所以在使用Spring Cache的时候我们要保证我们缓存的方法对于相同的方法参数要有相同的返回结果。
+使用Spring Cache需要我们做两方面的事：
+
+声明某些方法使用缓存
+配置Spring对Cache的支持
+
+和Spring对事务管理的支持一样，Spring对Cache的支持也有基于注解和基于XML配置两种方式。下面我们先来看看基于注解的方式。
+)
+
 
                     MyBatis 缓存工作原理浅析
 
