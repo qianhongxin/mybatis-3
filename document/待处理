@@ -168,6 +168,5 @@ https://blog.csdn.net/u012089657/article/details/49763631
 
 26。 多个插件代理同一个方法，比如executor的query方法，注意协调，如果想互不干扰的执行，要注意proceder.proceed()放行才行。
 
-
-
+27. java的jdbc已经提供了所有操作接口。上层的分库分表，数据源等都是基于它开发
 
