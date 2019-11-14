@@ -66,7 +66,7 @@ public class Plugin implements InvocationHandler {
     return target;
   }
 
-  // 实现 JDK 的 InvocationHandler 接口的 invoke 方法
+  // 实现 JDK 的 InvocationHandler 接口的 invoke 方法。
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     try {
