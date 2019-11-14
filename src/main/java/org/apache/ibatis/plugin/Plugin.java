@@ -67,7 +67,7 @@ public class Plugin implements InvocationHandler {
   }
 
   // 实现 JDK 的 InvocationHandler 接口的 invoke 方法，当代理对象被调用时，代理方法内部就是
-  // 执行的这个 invoke 方法。这里会有inceptor方法是否执行的判断和目标对象是否调用的判断
+  // 执行的这个 invoke 方法，invoke中会有目标方法的调用判断和通知（interceptor）的执行逻辑。这里会有inceptor方法是否执行的判断和目标对象是否调用的判断
   // 即method.invoke(target, args);方法的调用就是执行target的invoke方法，一直执行到原始被代理的
   // 的对象，即原始的和数据库交互的对象
   @Override
