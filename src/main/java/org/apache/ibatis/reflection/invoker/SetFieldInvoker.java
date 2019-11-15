@@ -29,6 +29,7 @@ public class SetFieldInvoker implements Invoker {
   }
 
   @Override
+  // 反射调用对象的set方法，设置查询到的值
   public Object invoke(Object target, Object[] args) throws IllegalAccessException, InvocationTargetException {
     field.set(target, args[0]);
     return null;
