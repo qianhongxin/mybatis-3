@@ -24,6 +24,7 @@ import org.apache.ibatis.reflection.property.PropertyTokenizer;
 /**
  * @author Clinton Begin
  */
+// mybatis可以返回的值的类型。collection，map，普通的bean或普通类型
 public interface ObjectWrapper {
 
   Object get(PropertyTokenizer prop);
