@@ -51,7 +51,7 @@ mybatis-spring是将mybatis的创建工作用spring管理。事务和session交�
 参数占位符：
 1. ${}是在构建sqlSource时就处理掉了，通过GenericTokenParser parser = new GenericTokenParser("${", "}", handler);处理替换掉,见PropertieyParse
 2. #{}是在 SqlSourceBuilder 阶段构建的，所有的SqlSource实现最后在构建阶段都会调用SqlSourceBuilder的parse方法，其中做了如下处理：
-    // 如果sql中包含#{}就替换成？，变成预编译的sql
+    // 如果sql中包含#{}就替换成？，变成预编译的sql。sql编译失败会提醒
     GenericTokenParser parser = new GenericTokenParser("#{", "}", handler);
     将#{}替换成？
 
