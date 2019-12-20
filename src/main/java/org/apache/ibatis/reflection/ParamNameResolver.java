@@ -50,11 +50,14 @@ public class ParamNameResolver {
   private boolean hasParamAnnotation;
   //对mapper的方法的参数，进行封装，多个参数封装成集合或者数组
   public ParamNameResolver(Configuration config, Method method) {
+      // 参数的类型数组
     final Class<?>[] paramTypes = method.getParameterTypes();
+    // 获取方法的参数注解，每个参数可以有多个注解，所以是二维注解类型的数组
     final Annotation[][] paramAnnotations = method.getParameterAnnotations();
     final SortedMap<Integer, String> map = new TreeMap<>();
     int paramCount = paramAnnotations.length;
     // get names from @Param annotations
+    // 遍历 paramAnnotations 二维数组，即遍历方法的每个参数
     for (int paramIndex = 0; paramIndex < paramCount; paramIndex++) {
       if (isSpecialParameter(paramTypes[paramIndex])) {
         // skip special parameters
@@ -62,6 +65,7 @@ public class ParamNameResolver {
       }
       String name = null;
       for (Annotation annotation : paramAnnotations[paramIndex]) {
+          // 如果参数有Param注解，就获取注解值，并退出循环
         if (annotation instanceof Param) {
           hasParamAnnotation = true;
           name = ((Param) annotation).value();
@@ -70,12 +74,16 @@ public class ParamNameResolver {
       }
       if (name == null) {
         // @Param was not specified.
+          // 如果没有指定 @Param 注解，先看是否配置可以用实际的变量名做为参数的 key
         if (config.isUseActualParamName()) {
+            // 如果可以用实际的变量名做为参数的 key，则获取参数名作为 key
           name = getActualParamName(method, paramIndex);
         }
+        // 如果不可以用实际的变量名做为参数的 key
         if (name == null) {
           // use the parameter index as the name ("0", "1", ...)
           // gcode issue #71
+            // 使用参数在方法中的位置作为 key
           name = String.valueOf(map.size());
         }
       }

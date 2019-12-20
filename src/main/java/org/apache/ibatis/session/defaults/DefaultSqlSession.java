@@ -305,7 +305,7 @@ public class DefaultSqlSession implements SqlSession {
     return configuration;
   }
 
-  // 根据Mapper的类型获取对应的mapper对象
+  // 根据Mapper的类型获取对应的mapper对象， 方法泛型，和类泛型结合用
   @Override
   public <T> T getMapper(Class<T> type) {
     return configuration.<T>getMapper(type, this);

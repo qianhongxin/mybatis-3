@@ -45,6 +45,26 @@ public void executeSql(String sql)throws Exception
         }
     }
 
+写操作
+public void executeSql(String sql)throws Exception
+    {
+        // 加载驱动
+        Class.forName(driver);
+        try(
+            // 获取数据库连接
+            Connection conn = DriverManager.getConnection(url
+                , user , pass);
+            // 手动开启事务
+            conn.setAutoCommit(false);
+            // 使用Connection来创建一个Statement对象
+            Statement stmt = conn.createStatement();
+            // ....
+            stmt.executeUpdate();
+            // 手动提交事务
+            conn.commit();
+        }
+    }
+
 
 
 PreparedStatement：

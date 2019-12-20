@@ -1,0 +1,4 @@
+jdbc通过 Connection 和数据库交互。
+
+事务的自动和手动管理也是通过 Connection 的方法管理。orm，spring的事务管理底层也是通过 Connection 做的，只是
+中间抽象出了 Transaction 接口间接操作 Connection 实现事务操作
