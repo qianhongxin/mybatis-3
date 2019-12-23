@@ -144,7 +144,7 @@ public class Configuration {
    */
   protected Class<?> configurationFactory;
 
-  //<mappers>...</mappers>标签中的mapper文件
+  //<mappers>...</mappers>标签中的mapper文件和@Mapper注解标注的
   protected final MapperRegistry mapperRegistry = new MapperRegistry(this);
   //<plugins>...</plugins>标签中配置的拦截器，记录了所有配置过的拦截器
   protected final InterceptorChain interceptorChain = new InterceptorChain();

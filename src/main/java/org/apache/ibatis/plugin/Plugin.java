@@ -70,6 +70,9 @@ public class Plugin implements InvocationHandler {
   // 执行的这个 invoke 方法，invoke中会有目标方法的调用判断和通知（interceptor）的执行逻辑。这里会有inceptor方法是否执行的判断和目标对象是否调用的判断
   // 即method.invoke(target, args);方法的调用就是执行target的invoke方法，一直执行到原始被代理的
   // 的对象，即原始的和数据库交互的对象
+
+  // 这里的args是method的被代理方法的参数，比如StatementHandler的参数就是executor, mappedStatement, parameterObject, rowBounds, resultHandler, boundSql
+  // 在拦截器中获取参数：executor=args[0],mappedStatement=args[1]等，用args接收，是因为jdk生成的动态代理类的方法会将源方法的参数封装成数组args传给invocationhandler
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
     try {
