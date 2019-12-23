@@ -27,6 +27,8 @@ public enum ResultSetType {
    * @since 3.5.0
    */
   DEFAULT(-1),
+
+    // 以下是游标操作结果集的类型
   FORWARD_ONLY(ResultSet.TYPE_FORWARD_ONLY),
   SCROLL_INSENSITIVE(ResultSet.TYPE_SCROLL_INSENSITIVE),
   SCROLL_SENSITIVE(ResultSet.TYPE_SCROLL_SENSITIVE);

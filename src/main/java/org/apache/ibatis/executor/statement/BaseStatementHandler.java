@@ -43,6 +43,8 @@ public abstract class BaseStatementHandler implements StatementHandler {
   // 类型处理器，mysql类型转java类型，Java类型转mysql类型
   protected final TypeHandlerRegistry typeHandlerRegistry;
   // 执行结果映射到具体对象的处理器
+  // 这里用这个处理器隔离开StatementHandler和具体的result包下的类的强依赖，迪米特法则即最小知道原则，
+  // StatementHandler不用知道怎么处理执行结果，交给ResultSetHandler即可，ResultSetHandler找具体的实现解析
   protected final ResultSetHandler resultSetHandler;
   // 参数绑定到sql的处理器
   protected final ParameterHandler parameterHandler;
