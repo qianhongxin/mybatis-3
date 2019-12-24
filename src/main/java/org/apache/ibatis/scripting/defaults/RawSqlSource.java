@@ -33,6 +33,7 @@ import org.apache.ibatis.session.Configuration;
  * @author Eduardo Macarron
  *
  * 原始sql的 sqlSource构建，处理，底层返回的是 StaticSqlSource，对StaticSqlSource的包装
+ * 即非动态sql，用的是RawSqlSource
  */
 public class RawSqlSource implements SqlSource {
 

@@ -177,3 +177,5 @@ https://blog.csdn.net/u012089657/article/details/49763631
 
     而且执行sql时，批量sql调用的都是addBatch，非批量都是execute
 
+29. ognl是对象导航技术，将对象和他的属性弄成抽象语法树，可以根据任意一个字段key，拿到值
+
