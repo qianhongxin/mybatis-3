@@ -170,3 +170,10 @@ https://blog.csdn.net/u012089657/article/details/49763631
 
 27. java的jdbc已经提供了所有操作接口。上层的分库分表，数据源等都是基于它开发
 
+28. jdbc提供了三种操作sql的入口：
+    普通的Statement：非预编译的sql，参数在sql执行前设置进去。容易引起sql注入
+    PrepareStatement：预编译的sql，使用时需要设置参数
+    CallStatement：存储过程调用
+
+    而且执行sql时，批量sql调用的都是addBatch，非批量都是execute
+
