@@ -370,6 +370,7 @@ public class MapperMethod {
       return index;
     }
 
+    // 创建mapper代理对象是，会获取MapKey的注解的值，作为mapperMethod的属性，方便构造map返回值时使用
     private String getMapKey(Method method) {
       String mapKey = null;
       if (Map.class.isAssignableFrom(method.getReturnType())) {

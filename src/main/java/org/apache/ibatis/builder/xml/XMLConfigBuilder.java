@@ -410,10 +410,13 @@ public class XMLConfigBuilder extends BaseBuilder {
     // parent 是<mappers></mappers>标签
     if (parent != null) {
       // 遍历<mappers>
-      //        <mapper resource="org/apache/ibatis/autoconstructor/AutoConstructorMapper.xml"/>
+                // class url   resource 三选一即可
+      //        <mapper class="" url="" resource="org/apache/ibatis/autoconstructor/AutoConstructorMapper.xml"/>
+        //      <package name="cn.ehai.koala.dao.AllotOrderDetailMapper"></package>
       //    </mappers>
       for (XNode child : parent.getChildren()) {
         if ("package".equals(child.getName())) {
+            // 如果有mappers标签下有package标签，说明是mapper代理开发，这里生成mapper代理
           String mapperPackage = child.getStringAttribute("name");
           configuration.addMappers(mapperPackage);
         } else {

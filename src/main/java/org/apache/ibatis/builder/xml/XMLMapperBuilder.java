@@ -99,6 +99,7 @@ public class XMLMapperBuilder extends BaseBuilder {
       //标记mapper已经加载过
       configuration.addLoadedResource(resource);
       //加载 mapper 类对象并放在mapperRegistry中，并标识此mapper文件已经被加载过
+        // 加载mapper 代理
       bindMapperForNamespace();
     }
 
