@@ -182,10 +182,12 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     ErrorContext.instance().activity("handling results").object(mappedStatement.getId());
 
     // 拿到的是多结果集，存储过程调用时，返回的就是多结果集
+    // mybatis查询返回集合时，可能是空，但是不可能是null，因为下面返回了ArrayList。
+    // mybatis查询返回单个对象时，可能会返回null
     final List<Object> multipleResults = new ArrayList<>();
 
     int resultSetCount = 0;
-    // 从 Statement 中拿到 sql 的执行结果
+    // 从 Statement 中拿到 sql 的执行结果的第一行，转成ResultSetWrapper
     ResultSetWrapper rsw = getFirstResultSet(stmt);
 
     List<ResultMap> resultMaps = mappedStatement.getResultMaps();
@@ -193,7 +195,9 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     validateResultMapsCount(rsw, resultMapCount);
     while (rsw != null && resultMapCount > resultSetCount) {
       ResultMap resultMap = resultMaps.get(resultSetCount);
+      // 将rsw专成返回值，放到multipleResults中
       handleResultSet(rsw, resultMap, multipleResults, null);
+      // 从stmt中拿到下一条执行结果，包转成ResultSetWrapper，然后继续下一次 handleResultSet
       rsw = getNextResultSet(stmt);
       cleanUpAfterHandlingResultSet();
       resultSetCount++;
@@ -605,11 +609,14 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     return resultObject;
   }
 
+  // 将rsw中的数据，转成目标对象，即将数据库中的数据转成对象
   private Object createResultObject(ResultSetWrapper rsw, ResultMap resultMap, List<Class<?>> constructorArgTypes, List<Object> constructorArgs, String columnPrefix)
       throws SQLException {
     final Class<?> resultType = resultMap.getType();
     final MetaClass metaType = MetaClass.forClass(resultType, reflectorFactory);
     final List<ResultMapping> constructorMappings = resultMap.getConstructorResultMappings();
+
+    // 如果返回值是一个字段，并且也有TypeHandler，则只要TypeHandler处理就行
     if (hasTypeHandlerForResultObject(rsw, resultType)) {
       return createPrimitiveResultObject(rsw, resultMap, columnPrefix);
     } else if (!constructorMappings.isEmpty()) {
