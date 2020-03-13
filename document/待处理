@@ -179,3 +179,5 @@ https://blog.csdn.net/u012089657/article/details/49763631
 
 29. ognl是对象导航技术，将对象和他的属性弄成抽象语法树，可以根据任意一个字段key，拿到值
 
+30. jdbc是接口，jdk提供。mysql，sharding jdbc，oracle等都可以实现对应功能
+
