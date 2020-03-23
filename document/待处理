@@ -181,3 +181,5 @@ https://blog.csdn.net/u012089657/article/details/49763631
 
 30. jdbc是接口，jdk提供。mysql，sharding jdbc，oracle等都可以实现对应功能
 
+31. 被mybatis反射生成对象的类，需要对属性有get set方法，设置值需要用。这也不符合类的封装特性
+
