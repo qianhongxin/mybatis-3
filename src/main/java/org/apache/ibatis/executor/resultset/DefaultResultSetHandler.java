@@ -184,6 +184,7 @@ public class DefaultResultSetHandler implements ResultSetHandler {
     // 拿到的是多结果集，存储过程调用时，返回的就是多结果集
     // mybatis查询返回集合时，可能是空，但是不可能是null，因为下面返回了ArrayList。
     // mybatis查询返回单个对象时，可能会返回null
+      // 具体见collapseSingleResultList(multipleResults)方法
     final List<Object> multipleResults = new ArrayList<>();
 
     int resultSetCount = 0;
@@ -318,6 +319,19 @@ public class DefaultResultSetHandler implements ResultSetHandler {
 
   @SuppressWarnings("unchecked")
   private List<Object> collapseSingleResultList(List<Object> multipleResults) {
+      // multipleResults中每个结果集都对应的一个sql查询结果。比如如果是存储过程调用，两个sql的话，multipleResults的size是2
+      // 如果是预编译sql等，multipleResults的size是1
+      // multipleResults的元素是List，List可能是空，但不是null
+      // DefaultSession的SelectList可能得到空List，但是不会是null
+      // DefaultSession的SelectOne会调用List的get(0)，所以如果List是空得到的就是null
+          // SelectOne的返回结果逻辑
+          //if (list.size() == 1) {
+          //      return list.get(0);
+          //    } else if (list.size() > 1) {
+          //      throw new TooManyResultsException("Expected one result (or null) to be returned by selectOne(), but found: " + list.size());
+          //    } else {
+          //      return null;
+          //    }
     return multipleResults.size() == 1 ? (List<Object>) multipleResults.get(0) : multipleResults;
   }
 
