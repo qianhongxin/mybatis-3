@@ -343,7 +343,7 @@ public class PooledDataSource implements DataSource {
   private int assembleConnectionTypeCode(String url, String username, String password) {
     return ("" + url + username + password).hashCode();
   }
-
+  // 利用DataSource的notifyAll唤醒等待空连接的线程
   protected void pushConnection(PooledConnection conn) throws SQLException {
 
     synchronized (state) {
@@ -383,6 +383,7 @@ public class PooledDataSource implements DataSource {
     }
   }
 
+  // 无可用连接时，利用DataSource的带指定超时时间的wait等待空连接。如果超时则抛出异常
   private PooledConnection popConnection(String username, String password) throws SQLException {
     boolean countedWait = false;
     PooledConnection conn = null;
