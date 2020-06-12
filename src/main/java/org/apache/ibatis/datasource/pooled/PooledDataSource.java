@@ -383,7 +383,7 @@ public class PooledDataSource implements DataSource {
     }
   }
 
-  // 无可用连接时，利用DataSource的带指定超时时间的wait等待空连接。如果超时则抛出异常
+  // 无可用连接时，利用DataSource的带指定超时时间的wait等待空连接。如果超时会被唤醒，并且后面则抛出异常
   private PooledConnection popConnection(String username, String password) throws SQLException {
     boolean countedWait = false;
     PooledConnection conn = null;
