@@ -74,6 +74,7 @@ public class DefaultSqlSessionFactory implements SqlSessionFactory {
     return openSessionFromDataSource(execType, null, autoCommit);
   }
 
+  // 这种传入connection获取SqlSession的方式，可以用于和spring的事务集成使用，事务给spring托管，然后这里打开session即可
   @Override
   public SqlSession openSession(Connection connection) {
     return openSessionFromConnection(configuration.getDefaultExecutorType(), connection);
