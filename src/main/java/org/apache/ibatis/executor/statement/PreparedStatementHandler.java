@@ -62,6 +62,7 @@ public class PreparedStatementHandler extends BaseStatementHandler {
   public <E> List<E> query(Statement statement, ResultHandler resultHandler) throws SQLException {
     PreparedStatement ps = (PreparedStatement) statement;
     // ps中已经是可以执行的sql了
+      // 同步阻塞的
     ps.execute();
     return resultSetHandler.<E> handleResultSets(ps);
   }
